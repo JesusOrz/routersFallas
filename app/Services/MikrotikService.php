@@ -23,9 +23,9 @@ class MikrotikService
     {
         try {
             $this->client->connect();
-            return '✅ Conexión exitosa al MikroTik.';
+            return 'Conexión exitosa al MikroTik.';
         } catch (\Exception $e) {
-            return '❌ Error de conexión: ' . $e->getMessage();
+            return 'Error de conexión: ' . $e->getMessage();
         }
     }
 
