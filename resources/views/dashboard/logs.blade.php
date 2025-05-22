@@ -1,22 +1,33 @@
 @extends('layouts.app')
 
-@section('title', 'Logs')
+@section('title', 'Logs del MikroTik')
 
 @section('content')
-    <h1 class="mt-4">Logs</h1>
+    <h1 class="mt-4">Logs del MikroTik</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item active">Logs</li>
     </ol>
-    <div class="row">
 
-        <div class="col-xl-3 col-md-6">
-            <div class="card bg-primary text-white mb-4">
-                <div class="card-body">Primary Card</div>
-                <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="#">View Details</a>
-                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                </div>
-            </div>
-        </div>
-    </div>
+    @if(count($logs) > 0)
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Hora</th>
+                    <th>Tema</th>
+                    <th>Mensaje</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($logs as $log)
+                    <tr>
+                        <td>{{ $log['time'] ?? '-' }}</td>
+                        <td>{{ $log['topics'] ?? '-' }}</td>
+                        <td>{{ $log['message'] ?? '-' }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    @else
+        <div class="alert alert-warning">No se pudieron obtener los logs del router.</div>
+    @endif
 @endsection

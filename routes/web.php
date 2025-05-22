@@ -17,9 +17,10 @@ Route::get('/routers', [MikrotikController::class, 'conectar'])
     ->middleware(['auth', 'verified'])
     ->name('routers');
 
-Route::get('/logs', function () {
-    return view('dashboard.logs');
-})->middleware(['auth', 'verified'])->name('logs');
+Route::get('/logs', [MikrotikController::class, 'mostrarLogs'])
+    ->middleware(['auth', 'verified'])
+    ->name('logs');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -13,4 +13,10 @@ class MikrotikController extends Controller
         $mensaje = $mikrotik->testConnection();
         return view('dashboard.routers', compact('mensaje'));
     }
+    public function mostrarLogs(MikrotikService $mikrotik)
+{
+    $logs = $mikrotik->getLogs();
+    return view('dashboard.logs', compact('logs'));
+}
+
 }
