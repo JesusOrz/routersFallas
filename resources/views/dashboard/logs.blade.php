@@ -1,16 +1,14 @@
 @extends('layouts.app')
 
-@section('title', 'Tables')
+@section('title', 'Logs')
 
 @section('content')
-    <h1 class="mt-4">Tables</h1>
+    <h1 class="mt-4">Logs</h1>
     <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item active">Tables</li>
+        <li class="breadcrumb-item active">Logs</li>
     </ol>
-
-    <!-- Aquí puedes poner los cards, charts, etc. -->
     <div class="row">
-        <!-- Card de ejemplo -->
+
         <div class="col-xl-3 col-md-6">
             <div class="card bg-primary text-white mb-4">
                 <div class="card-body">Primary Card</div>
