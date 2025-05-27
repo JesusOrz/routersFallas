@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Services;
 
 use RouterOS\Client;
@@ -9,15 +8,16 @@ class MikrotikService
 {
     protected $client;
 
-    public function __construct()
+    public function __construct(array $config)
     {
         $this->client = new Client([
-            'host' => '14.14.14.114',
-            'user' => 'admin',
-            'pass' => '142003',
-            'port' => 8728,
+            'host' => $config['host'],
+            'user' => $config['user'],
+            'pass' => $config['password'], // CAMBIO AQUÍ
+            'port' => $config['port'] ?? 8728,
         ]);
     }
+
     public function testConnection()
     {
         try {
@@ -27,6 +27,7 @@ class MikrotikService
             return 'Error de conexión: ' . $e->getMessage();
         }
     }
+
     public function getLogs($limit = 50)
     {
         try {

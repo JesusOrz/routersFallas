@@ -13,11 +13,11 @@ return new class extends Migration
     {
        Schema::create('routers', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('ip');
-            $table->string('username');
+            $table->string('host');
+            $table->string('user');
             $table->string('password');
             $table->integer('port')->default(8728);
+            $table->enum('estado', ['activo', 'inactivo'])->default('inactivo');
             $table->timestamps();
         });
     }

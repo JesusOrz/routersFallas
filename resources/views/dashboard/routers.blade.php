@@ -8,41 +8,26 @@
         <li class="breadcrumb-item active">Routers</li>
     </ol>
 
-    {{-- Mensaje de conexión --}}
-    @if(isset($mensaje))
-        <div class="alert alert-info">
-            {{ $mensaje }}
-        </div>
-    @endif
-
     <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">ROUTER</th>
-          <th scope="col">IP</th>
-          <th scope="col">STATE</th>
-        </tr>
-      </thead>
-      <tbody class="table-group-divider">
-        <tr>
-          <th scope="row">1</th>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td>John</td>
-          <td>Doe</td>
-          <td>@social</td>
-        </tr>
-      </tbody>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>HOST</th>
+                <th>USER</th>
+                <th>PORT</th>
+                <th>STATE</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($resultados as $router)
+                <tr>
+                    <td>{{ $router['id'] }}</td>
+                    <td>{{ $router['host'] }}</td>
+                    <td>{{ $router['user'] }}</td>
+                    <td>{{ $router['port'] }}</td>
+                    <td>{{ $router['state'] }}</td>
+                </tr>
+            @endforeach
+        </tbody>
     </table>
 @endsection
