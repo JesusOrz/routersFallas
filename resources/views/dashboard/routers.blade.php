@@ -19,9 +19,9 @@
       <thead>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">First</th>
-          <th scope="col">Last</th>
-          <th scope="col">Handle</th>
+          <th scope="col">ROUTER</th>
+          <th scope="col">IP</th>
+          <th scope="col">STATE</th>
         </tr>
       </thead>
       <tbody class="table-group-divider">

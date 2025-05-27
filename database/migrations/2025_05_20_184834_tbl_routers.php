@@ -11,14 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('routers', function (Blueprint $table){
+       Schema::create('routers', function (Blueprint $table) {
             $table->id();
-            $table->string('router',25);
-            $table->string('ip_address',45)->unique();
+            $table->string('name');
+            $table->string('ip');
+            $table->string('username');
+            $table->string('password');
+            $table->integer('port')->default(8728);
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */
