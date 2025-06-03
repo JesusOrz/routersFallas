@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MikrotikController;
+use App\Http\Controllers\LogController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -14,22 +14,20 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
-Route::get('/routers', [MikrotikController::class, 'conectar'])
+Route::get('/routers', [MikrotikController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('routers');
 
-Route::get('/logs', [MikrotikController::class, 'mostrarLogs'])
+Route::post('/routers/create', [MikrotikController::class, 'create'])
+    ->middleware(['auth', 'verified'])
+    ->name('routers.create');
+
+Route::get('/logs', [LogController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('logs');
 
 
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
-Route::get('/conectar-mikrotik', [MikrotikController::class, 'conectar']);
+Route::get('/routers/json', [MikrotikController::class, 'getRouters'])->name('routers.json');
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

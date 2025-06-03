@@ -8,66 +8,60 @@ use App\Services\MikrotikService;
 
 class MikrotikController extends Controller
 {
-    public function conectar()
+
+    public function index()
     {
-        $routers = Router::all();
-        $resultados = [];
+        return view('dashboard.routers');
+    }
 
-        foreach ($routers as $router) {
-            try {
-                $mikrotik = new MikrotikService([
-                    'host' => $router->host,
-                    'user' => $router->user,
-                    'password' => $router->password, // asegúrate que el campo es 'password'
-                    'port' => $router->port ?? 8728,
-                ]);
 
-                $estado = $mikrotik->testConnection();
-            } catch (\Exception $e) {
-                $estado = 'Error: ' . $e->getMessage();
-            }
+    public function getRouters()
+    {
+        $routers = Router::all()->map(function ($router) {
+            return [
+                'id'     => $router->id,
+                'host'   => $router->host,
+                'user'   => $router->user,
+                'state'  => $router->state ?? 'inactivo',
+                'port'   => $router->port ?? 8728,
+            ];
+        });
 
-            $resultados[] = [
-                'id' => $router->id,
+        return response()->json(['data' => $routers]);
+    }
+     public function create(Request $request)
+    {
+        $validated = $request->validate([
+            'host' => 'required|string',
+            'user' => 'required|string',
+            'password' => 'required|string',
+            'port' => 'required|integer',
+        ]);
+
+        $router = Router::create($validated);
+
+        try {
+            $mikrotik = new MikrotikService([
                 'host' => $router->host,
                 'user' => $router->user,
-                'state' => $router->state,
-                'port' => $router->port,
-                
-            ];
-        }
+                'password' => $router->password,
+                'port' => $router->port ?? 8728,
+            ]);
 
-        return view('dashboard.routers', compact('resultados'));
-    }
-
-    public function mostrarLogs()
-    {
-        $routers = Router::all();
-        $logsPorRouter = [];
-
-        foreach ($routers as $router) {
-            try {
-                $mikrotik = new MikrotikService([
-                    'host' => $router->host,
-                    'user' => $router->user,
-                    'password' => $router->password,
-                    'state' => $router->state,
-                    'port' => $router->port ?? 8728,
-                ]);
-
-                $logs = $mikrotik->getLogs(20);
-                $logsPorRouter[] = [
-                    'host' => $router->host,
-                    'logs' => $logs,
-                ];
-            } catch (\Exception $e) {
-                $logsPorRouter[] = [
-                    'host' => $router->host,
-                    'logs' => [['message' => 'Error: ' . $e->getMessage()]],
-                ];
+            if ($mikrotik->testConnection()) {
+                $router->state = 'activo';
+                $router->save();
             }
+        } catch (\Exception $e) {
+
         }
 
-        return view('dashboard.logs', compact('logsPorRouter'));
+        return response()->json(['success' => true, 'router' => $router]);
     }
+
+
+
+    
+
+    
 }
