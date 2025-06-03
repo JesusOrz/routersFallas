@@ -72,4 +72,58 @@ $(document).ready(function () {
             },
         });
     });
+
+    $("#routers-table").on("click", ".edit-btn", function () {
+        const id = $(this).data("id");
+        const rowData = table.row($(this).closest("tr")).data();
+
+        $("#edit-id").val(rowData.id);
+        $("#edit-host").val(rowData.host);
+        $("#edit-user").val(rowData.user);
+        $("#edit-pass").val(""); // no se muestra la contraseña real
+        $("#edit-port").val(rowData.port);
+
+        $("#modalEditRouter").modal("show");
+    });
+
+    $("#btnUpdate").click(function () {
+        const id = $("#edit-id").val();
+        const host = $("#edit-host").val();
+        const user = $("#edit-user").val();
+        const pass = $("#edit-pass").val(); // opcional
+        const port = $("#edit-port").val();
+
+        $.ajax({
+            url: `${ROUTERS_UPDATE_URL}/${id}`,
+            method: "PUT",
+            data: {
+                _token: CSRF_TOKEN,
+                host: host,
+                user: user,
+                password: pass,
+                port: port,
+            },
+            success: function (response) {
+                if (response.success) {
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "Router actualizado correctamente",
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
+                    $("#modalEditRouter").modal("hide");
+                    table.ajax.reload();
+                }
+            },
+            error: function (xhr) {
+                const errors = xhr.responseJSON.errors;
+                let msg = "";
+                for (let field in errors) {
+                    msg += errors[field][0] + "\n";
+                }
+                alert(msg);
+            },
+        });
+    });
 });

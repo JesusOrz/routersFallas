@@ -36,7 +36,7 @@
                 </div>
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon1">PORT</span>
-                    <input type="text" class="form-control" value="8728" aria-label="port"
+                    <input type="number" class="form-control" value="8728" aria-label="port"
                         aria-describedby="basic-addon1" id="port">
                 </div>
                 <button class="btn btn-info w-100 py-2" name="action" value="add" type="button"
@@ -45,6 +45,42 @@
         </div>
     </div>
 </div>
+
+<!-- Modal de edición -->
+<div class="modal fade" id="modalEditRouter" tabindex="-1" aria-labelledby="modalEditRouterLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalEditRouterLabel">Editar Router</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="edit-id">
+        <div class="mb-3">
+          <label for="edit-host" class="form-label">Host</label>
+          <input type="text" class="form-control" id="edit-host">
+        </div>
+        <div class="mb-3">
+          <label for="edit-user" class="form-label">Usuario</label>
+          <input type="text" class="form-control" id="edit-user">
+        </div>
+        <div class="mb-3">
+          <label for="edit-pass" class="form-label">Contraseña</label>
+          <input type="password" class="form-control" id="edit-pass">
+        </div>
+        <div class="mb-3">
+          <label for="edit-port" class="form-label">Puerto</label>
+          <input type="number" class="form-control" id="edit-port" value="8728">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" id="btnUpdate">Guardar Cambios</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <table id="routers-table" class="table table-striped">
     <thead>
         <tr>
@@ -58,13 +94,5 @@
     </thead>
 </table>
 
-
-
-
-<script>
-const CSRF_TOKEN = "{{ csrf_token() }}";
-const ROUTERS_STORE_URL = "{{ route('routers.create') }}";
-const ROUTERS_JSON_URL = "{{ route('routers.json') }}";
-</script>
 
 @endsection
