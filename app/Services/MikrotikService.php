@@ -13,7 +13,7 @@ class MikrotikService
         $this->client = new Client([
             'host' => $config['host'],
             'user' => $config['user'],
-            'pass' => $config['password'], // CAMBIO AQUÍ
+            'pass' => $config['password'], 
             'port' => $config['port'] ?? 8728,
         ]);
     }

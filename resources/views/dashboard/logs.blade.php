@@ -1,40 +1,33 @@
 @extends('layouts.app')
+@section('title', 'Logs')
 
 @section('content')
-<div class="container">
     <h1>Logs</h1>
+    <div class="container">
 
-    <!-- Selección de Router -->
-    <form id="logForm">
-        <div class="mb-3">
-            <label for="router_id" class="form-label">Seleccionar Router</label>
-            <select name="router_id" id="router_id" class="form-select">
-                @foreach ($routers as $router)
-                    <option value="{{ $router->id }}">{{ $router->host }}</option>
-                @endforeach
-            </select>
+        <form id="logForm">
+            <div class="mb-3">
+                <label for="router_id" class="form-label">Available routers</label>
+                <select name="router_id" id="router_id" class="form-select">
+                    <option selected disabled>Loading routers...</option>
+                </select>
+            </div>
+        </form>
+
+
+        <div class="container mt-4 mb-3">
+            <div id="logs-container" class="border p-3 bg-light" style="min-height: 200px; white-space: pre-wrap;">
+
+            </div>
         </div>
-        <button type="button" class="btn btn-primary" id="btnViewLogs">Ver Logs en tiempo real</button>
-    </form>
 
-    <hr>
-
-    <!-- Subir archivo -->
-    <form action="{{ route('logs.upload') }}" method="POST" enctype="multipart/form-data">
-        @csrf
-        <div class="mb-3">
-            <label for="logfile" class="form-label">Subir archivo log (.txt)</label>
-            <input type="file" name="logfile" id="logfile" class="form-control">
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button id="analizar-btn" type="button" class="btn btn-primary">
+                Analizar
+            </button>
         </div>
-        <button type="submit" class="btn btn-success">Subir archivo</button>
-    </form>
 
-    <hr>
+        <div id="analisis-container" class="mt-3 border p-3 bg-light"></div>
+    </div>
 
-    <!-- Resultado -->
-    <h4>Resultados</h4>
-    <div id="log-output" style="white-space: pre-line;"></div>
-</div>
 @endsection
-
-

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('user');
             $table->string('password');
             $table->integer('port')->default(8728);
-            $table->enum('estado', ['activo', 'inactivo'])->default('inactivo');
+            $table->enum('estado', ['activo', 'inactivo'])->default('activo');
             $table->timestamps();
         });
     }

@@ -26,6 +26,10 @@ Route::get('/logs', [LogController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('logs');
 
+Route::get('/cargar-logs', [LogController::class, 'cargarLogsView'])
+    ->middleware(['auth', 'verified'])
+    ->name('cargar-logs');
+
     Route::get('/logs/{id}', [LogController::class, 'show'])
     ->middleware(['auth', 'verified'])
     ->name('logs.show');
@@ -35,8 +39,11 @@ Route::get('/routers/json', [RouterController::class, 'getRouters'])->name('rout
 Route::put('/routers/update/{id}', [RouterController::class, 'update'])->name('routers.update');
 
 
-Route::get('/routers/{id}/logs', [LogController::class, 'show'])->name('routers.logs');
-Route::post('/logs/upload', [LogController::class, 'upload'])->name('logs.upload');
+Route::post('/logs/get', [LogController::class, 'getLogs'])->name('logs.get');
+
+Route::get('/routers/list', [LogController::class, 'getRouters']);
+Route::post('/logs/analizar', [LogController::class, 'analizarLogsConIA'])->name('logs.analizar');
+Route::post('/logs/upload', [LogController::class, 'uploadLog'])->name('logs.upload');
 
 
 

@@ -14,7 +14,7 @@
                     Routers
                 </a>
 
-                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                <a class="nav-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                                 <div class="sb-nav-link-icon"><i class="bi bi-clipboard2-pulse-fill"></i></div>
                                 Logs
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -24,7 +24,7 @@
                     data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
                         <a class="nav-link" href="{{ route('logs') }}">Ver logs</a>
-                        <a class="nav-link" href="{{ route('logs') }}">Cargar archivo</a>
+                        <a class="nav-link" href="{{ route('cargar-logs') }}">Cargar archivo</a>
                     </nav>
                 </div>
 

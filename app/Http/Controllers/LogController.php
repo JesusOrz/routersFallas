@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
+use OpenAI;
+
+use Illuminate\Support\Facades\Http;
 use App\Services\MikrotikService;
 use App\Models\Router;
 
@@ -10,33 +13,116 @@ class LogController extends Controller
 {
     public function index()
     {
-        $routers = \App\Models\Router::all(); 
-        return view('dashboard.logs', compact('routers'));
+        return view('dashboard.logs');
     }
 
-    public function show($id)
-{
-    $router = Router::findOrFail($id);
+    public function getRouters()
+    {
+        $routers = Router::all(['id', 'host']);
+        return response()->json($routers);
+    }
 
-    $config = [
-        'host' => $router->host,
-        'user' => $router->user,
-        'password' => $router->password,
-        'port' => $router->port,
-    ];
+    public function cargarLogsView()
+    {
+        return view('dashboard.cargarLog');
+    }
+
+    public function getLogs(Request $request)
+    {
+        $router = Router::findOrFail($request->router_id);
+
+        try {
+            $mikrotik = new MikrotikService([
+                'host' => $router->host,
+                'user' => $router->user,
+                'password' => $router->password,
+                'port' => $router->port ?? 8728,
+            ]);
+
+            $logs = $mikrotik->getLogs();
+
+            $output = '';
+            foreach ($logs as $log) {
+                $output .= '[' . ($log['time'] ?? '') . '] ' . ($log['message'] ?? '') . "\n";
+            }
+
+            return response()->json(['logs' => $output]);
+
+        } catch (\Exception $e) {
+            return response()->json(['logs' => 'Error: ' . $e->getMessage()], 500);
+        }
+    }
+
+    public function analizarLogsConIA(Request $request)
+    {
+        $logs = $request->input('logs');
+
+        if (!$logs) {
+            return response()->json(['error' => 'No se proporcionaron logs'], 400);
+        }
+
+        try {
+            $apiKey = env('OPENROUTER_API_KEY'); 
+
+            $response = Http::withHeaders([
+                'Authorization' => 'Bearer ' . $apiKey,
+                'Content-Type' => 'application/json',
+            ])->post('https://openrouter.ai/api/v1/chat/completions', [
+                        'model' => 'openai/gpt-3.5-turbo', // o prueba otros: anthropic/claude-3-haiku, meta-llama/llama-3-70b-instruct, etc.
+                        'messages' => [
+                            ['role' => 'system', 'content' => 'Eres un experto en redes que analiza logs de routers MikroTik.'],
+                            ['role' => 'user', 'content' => "Analiza estos logs y dime si hay posibles fallas o configuraciones incorrectas:\n\n" . $logs],
+                        ],
+                        'temperature' => 0.3,
+                    ]);
+
+            return response()->json(['respuesta' => $response['choices'][0]['message']['content']]);
+
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error al comunicarse con OpenRouter: ' . $e->getMessage()], 500);
+        }
+    }
+    public function uploadLog(Request $request)
+{
+    $request->validate([
+        'logfile' => 'required|file|mimes:txt|max:2048',
+    ]);
 
     try {
-        $mikrotik = new MikrotikService($config);
-        $logs = $mikrotik->getLogs(100); // puedes ajustar el número de logs
+        $fileContent = file_get_contents($request->file('logfile')->getRealPath());
 
-        return view('logs.show', [ // asegúrate de tener esta vista
-            'router' => $router,
-            'logs' => $logs,
+        $apiKey = env('OPENROUTER_API_KEY'); // Usa tu clave de OpenRouter
+        $baseUrl = 'https://openrouter.ai/api/v1/chat/completions';
+
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $apiKey,
+            'HTTP-Referer' => 'http://localhost', // Cambia por tu dominio o app
+            'Content-Type' => 'application/json',
+        ])->post($baseUrl, [
+            'model' => 'openai/gpt-3.5-turbo', // Puedes usar otros modelos como "anthropic/claude-3-opus"
+            'messages' => [
+                ['role' => 'system', 'content' => 'Eres un experto en redes que analiza logs de routers MikroTik.'],
+                ['role' => 'user', 'content' => "Analiza estos logs de archivo:\n\n" . $fileContent],
+            ],
+            'temperature' => 0.3,
         ]);
+
+        if (!isset($response['choices'][0]['message']['content'])) {
+            return response()->json(['error' => 'Respuesta inválida de OpenRouter'], 500);
+        }
+
+        $respuesta = $response['choices'][0]['message']['content'];
+
+        return response()->json(['respuesta' => $respuesta]);
+
     } catch (\Exception $e) {
-        return redirect()->route('routers')->with('error', 'Error al obtener logs: ' . $e->getMessage());
+        return response()->json(['error' => 'Error al comunicarse con OpenRouter: ' . $e->getMessage()], 500);
     }
 }
 
-   
+
+
+
+
+
 }
