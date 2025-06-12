@@ -16,8 +16,6 @@ return new class extends Migration
             $table->foreignId('router_id')->constrained('routers')->onDelete('cascade');
             $table->dateTime('log_time');
             $table->text('message');
-            $table->string('level', 50)->nullable(); // e.g., info, warning, error
-            $table->boolean('processed')->default(false);
             $table->timestamps();
         });
     }

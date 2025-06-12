@@ -44,7 +44,7 @@
     <script src="{{ asset('js/dropdown.js') }}"></script>
     <script src="{{ asset('js/analisis.js') }}"></script>
     <script src="{{ asset('js/upload.js') }}"></script>
-    <script src="{{ asset('js/file.js') }}"></script>
+    
     <script>
     const CSRF_TOKEN = "{{ csrf_token() }}";
     const ROUTERS_STORE_URL = "{{ route('routers.create') }}";

@@ -23,7 +23,7 @@
                 <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
                     data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link" href="{{ route('logs') }}">Ver logs</a>
+                        <a class="nav-link" href="{{ route('logs') }}">Analizar logs</a>
                         <a class="nav-link" href="{{ route('cargar-logs') }}">Cargar archivo</a>
                     </nav>
                 </div>

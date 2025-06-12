@@ -68,10 +68,10 @@ class LogController extends Controller
                 'Authorization' => 'Bearer ' . $apiKey,
                 'Content-Type' => 'application/json',
             ])->post('https://openrouter.ai/api/v1/chat/completions', [
-                        'model' => 'openai/gpt-3.5-turbo', // o prueba otros: anthropic/claude-3-haiku, meta-llama/llama-3-70b-instruct, etc.
+                        'model' => 'openai/gpt-3.5-turbo', 
                         'messages' => [
                             ['role' => 'system', 'content' => 'Eres un experto en redes que analiza logs de routers MikroTik.'],
-                            ['role' => 'user', 'content' => "Analiza estos logs y dime si hay posibles fallas o configuraciones incorrectas:\n\n" . $logs],
+                            ['role' => 'user', 'content' => "Analiza estos logs y dime si hay posibles fallas o configuraciones incorrectas, fallas hardware, ataques:\n\n" . $logs],
                         ],
                         'temperature' => 0.3,
                     ]);
@@ -91,15 +91,15 @@ class LogController extends Controller
     try {
         $fileContent = file_get_contents($request->file('logfile')->getRealPath());
 
-        $apiKey = env('OPENROUTER_API_KEY'); // Usa tu clave de OpenRouter
+        $apiKey = env('OPENROUTER_API_KEY'); 
         $baseUrl = 'https://openrouter.ai/api/v1/chat/completions';
 
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . $apiKey,
-            'HTTP-Referer' => 'http://localhost', // Cambia por tu dominio o app
+            'HTTP-Referer' => 'http://localhost', 
             'Content-Type' => 'application/json',
         ])->post($baseUrl, [
-            'model' => 'openai/gpt-3.5-turbo', // Puedes usar otros modelos como "anthropic/claude-3-opus"
+            'model' => 'openai/gpt-3.5-turbo',
             'messages' => [
                 ['role' => 'system', 'content' => 'Eres un experto en redes que analiza logs de routers MikroTik.'],
                 ['role' => 'user', 'content' => "Analiza estos logs de archivo:\n\n" . $fileContent],
