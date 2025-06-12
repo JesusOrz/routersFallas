@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RouterController;
 use App\Http\Controllers\LogController;
+use App\Http\Controllers\AnalysisController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -30,9 +31,13 @@ Route::get('/cargar-logs', [LogController::class, 'cargarLogsView'])
     ->middleware(['auth', 'verified'])
     ->name('cargar-logs');
 
-    Route::get('/logs/{id}', [LogController::class, 'show'])
+Route::get('/logs/{id}', [LogController::class, 'show'])
     ->middleware(['auth', 'verified'])
     ->name('logs.show');
+
+Route::post('/analysis/create', [AnalysisController::class, 'create'])
+    ->middleware(['auth', 'verified'])
+    ->name('analysis.create');
 
 
 Route::get('/routers/json', [RouterController::class, 'getRouters'])->name('routers.json');
@@ -40,10 +45,14 @@ Route::put('/routers/update/{id}', [RouterController::class, 'update'])->name('r
 
 
 Route::post('/logs/get', [LogController::class, 'getLogs'])->name('logs.get');
-
-Route::get('/routers/list', [LogController::class, 'getRouters']);
 Route::post('/logs/analizar', [LogController::class, 'analizarLogsConIA'])->name('logs.analizar');
 Route::post('/logs/upload', [LogController::class, 'uploadLog'])->name('logs.upload');
+
+
+Route::get('/tipo-analisis', [AnalysisController::class, 'getAnalysisTypes']);
+
+
+
 
 
 

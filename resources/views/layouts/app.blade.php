@@ -41,6 +41,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('js/scripts.js') }}"></script>
     <script src="{{ asset('js/register.js') }}"></script>
+    <script src="{{ asset('js/logs.js') }}"></script>
     <script src="{{ asset('js/dropdown.js') }}"></script>
     <script src="{{ asset('js/analisis.js') }}"></script>
     <script src="{{ asset('js/upload.js') }}"></script>
@@ -48,12 +49,13 @@
     <script>
     const CSRF_TOKEN = "{{ csrf_token() }}";
     const ROUTERS_STORE_URL = "{{ route('routers.create') }}";
+    const ANALYSIS_STORE_URL = "{{ route('analysis.create') }}";
     const ROUTERS_JSON_URL = "{{ route('routers.json') }}";
     const ROUTERS_UPDATE_URL = "{{ url('/routers/update') }}";
-    const ROUTERS_LIST_URL = "{{ url('/routers/list') }}";
     const GET_LOG = "{{ route('logs.get') }}"
     const UPLOAD_LOG = "{{ route('logs.upload') }}"
     const ANALYZE_LOG = "{{ route('logs.analizar') }}"
+    const ANALYSIS_LIST_URL = "{{ url('/tipo-analisis') }}";
     </script>
 
 

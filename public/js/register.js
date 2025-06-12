@@ -31,6 +31,25 @@ $(document).ready(function () {
         ],
     });
 
+    let tableAnalysis = $("#analysis-table").DataTable({
+        ajax: ANALYSIS_LIST_URL,
+        columns: [
+            { data: "id" },
+            { data: "analysis" },
+            { data: "description" },
+            {
+                data: null,
+                render: function (data, type, row) {
+                    return `
+                        <button class="btn btn-sm btn-primary edit-btn" data-id="${row.id}">
+                            <i class="bi bi-pencil-square"></i> Editar
+                        </button>
+                    `;
+                },
+            },
+        ],
+    });
+
     $("#btnCreate").click(function () {
         const host = $("#host").val();
         const user = $("#user").val();
@@ -126,4 +145,50 @@ $(document).ready(function () {
             },
         });
     });
+
+    $("#btnCreateAnalysis").click(function () {
+    const analysis = $("#analysis").val().trim();
+    const description = $("#description").val().trim();
+    $.ajax({
+        url: ANALYSIS_STORE_URL,
+        method: "POST",
+        data: {
+            _token: CSRF_TOKEN,
+            analysis: analysis,
+            description: description,
+        },
+        success: function (response) {
+            if (response.success) {
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Se agregó correctamente el registro",
+                    showConfirmButton: false,
+                    timer: 1500,
+                });
+
+                //agregar nueva opción al dropdown
+                $("#analysis_type").append(
+                    $("<option>", {
+                        value: response.analysis.id,
+                        text: response.analysis.analysis
+                    })
+                ).val(response.analysis.id);
+
+                $("#analysis, #description").val("");
+                $("#modalAnalysis").modal("hide");
+            }
+        },
+        error: function (xhr) {
+            const errors = xhr.responseJSON.errors;
+            let msg = "";
+            for (let field in errors) {
+                msg += errors[field][0] + "\n";
+            }
+            alert(msg);
+        },
+    });
+});
+
+
 });

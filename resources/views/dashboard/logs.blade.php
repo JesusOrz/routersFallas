@@ -38,14 +38,11 @@
                         </select>
                     </div>
 
-                    <!-- Alineación del botón a la derecha -->
-                    <div class="text-end">
-                        <button type="button" class="btn" data-bs-toggle="tooltip" title="Agregar opción">
-                            <i class="bi bi-plus-circle-fill"></i>
-                        </button>
-                    </div>
+                    
                 </div>
             </div>
+
+            
 
 
             {{-- Botón de análisis --}}

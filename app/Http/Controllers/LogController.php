@@ -16,12 +16,6 @@ class LogController extends Controller
         return view('dashboard.logs');
     }
 
-    public function getRouters()
-    {
-        $routers = Router::all(['id', 'host']);
-        return response()->json($routers);
-    }
-
     public function cargarLogsView()
     {
         return view('dashboard.cargarLog');
@@ -77,7 +71,6 @@ class LogController extends Controller
                     ]);
 
             return response()->json(['respuesta' => $response['choices'][0]['message']['content']]);
-
         } catch (\Exception $e) {
             return response()->json(['error' => 'Error al comunicarse con OpenRouter: ' . $e->getMessage()], 500);
         }
