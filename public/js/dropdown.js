@@ -1,13 +1,17 @@
 $(document).ready(function () {
     $.ajax({
         url: ROUTERS_JSON_URL,
-        method: 'GET',
+        method: "GET",
         success: function (data) {
-            let select = $('#router_id');
+            let select = $("#router_id");
             select.empty();
-            select.append('<option selected disabled>Selecciona un router</option>');
-            data.data.forEach(router => {
-                select.append(`<option value="${router.id}">${router.host}</option>`);
+            select.append(
+                "<option selected disabled>Selecciona un router</option>"
+            );
+            data.data.forEach((router) => {
+                select.append(
+                    `<option value="${router.id}">${router.host}</option>`
+                );
             });
         },
         error: function () {
@@ -18,18 +22,22 @@ $(document).ready(function () {
                 showConfirmButton: false,
                 timer: 1500,
             });
-        }
+        },
     });
 
     $.ajax({
         url: ANALYSIS_LIST_URL,
-        method: 'GET',
+        method: "GET",
         success: function (data) {
-            let select = $('#analysis_type');
+            let select = $("#analysis_type");
             select.empty();
-            select.append('<option selected disabled>Selecciona una opción</option>');
-            data.data.forEach(analysis => {
-                select.append(`<option value="${analysis.id}">${analysis.analysis}</option>`);
+            select.append(
+                "<option selected disabled>Selecciona una opción</option>"
+            );
+            data.data.forEach((analysis) => {
+                select.append(
+                    `<option value="${analysis.id}" data-description="${analysis.description}">${analysis.analysis}</option>`
+                );
             });
         },
         error: function () {
@@ -42,6 +50,6 @@ $(document).ready(function () {
             });
 
             console.log(ANALYSIS_LIST_URL);
-        }
+        },
     });
 });

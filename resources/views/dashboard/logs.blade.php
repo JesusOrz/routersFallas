@@ -38,11 +38,11 @@
                         </select>
                     </div>
 
-                    
+
                 </div>
             </div>
 
-            
+
 
 
             {{-- Botón de análisis --}}
@@ -61,7 +61,7 @@
                 </div>
                 <div class="card-body">
                     <div id="logs-container" class="bg-light border p-3"
-                        style="min-height: 200px; white-space: pre-wrap;">
+                        style="min-height: 300px; max-height: 300px; overflow-y: auto; white-space: pre-wrap;">
                         <!-- Los logs se cargarán aquí -->
                     </div>
                 </div>
@@ -70,7 +70,7 @@
     </div>
 
     {{-- Resultado del análisis --}}
-    <div class="card">
+    <div class="card mb-3">
         <div class="card-header text-bg-secondary">
             Resultado del Análisis
         </div>
@@ -80,5 +80,18 @@
             </div>
         </div>
     </div>
+
+    {{-- Recomendaciones --}}
+    <div class="card">
+        <div class="card-header text-bg-secondary">
+            Recomendaciones
+        </div>
+        <div class="card-body">
+            <div id="recomendaciones-container" class="bg-light p-3">
+                <!-- El resultado del análisis aparecerá aquí -->
+            </div>
+        </div>
+    </div>
+
 </div>
 @endsection
