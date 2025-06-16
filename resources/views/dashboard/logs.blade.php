@@ -37,8 +37,6 @@
                             <option selected disabled>Cargando opciones...</option>
                         </select>
                     </div>
-
-
                 </div>
             </div>
 

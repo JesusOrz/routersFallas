@@ -83,6 +83,17 @@
             </div>
         </div>
     </div>
+     {{-- Recomendaciones --}}
+    <div class="card">
+        <div class="card-header text-bg-secondary">
+            Recomendaciones
+        </div>
+        <div class="card-body">
+            <div id="recomendaciones" class="bg-light p-3">
+                <!-- El resultado del análisis aparecerá aquí -->
+            </div>
+        </div>
+    </div>
 </div>
 
 <script src="{{ asset('js/file.js') }}"></script>

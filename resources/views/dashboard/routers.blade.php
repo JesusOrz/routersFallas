@@ -92,7 +92,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="formCreateRouter">
+                    <form id="formCreateAnalysis">
                         <div class="mb-3">
                             <label for="analysis" class="form-label">Tipo de análisis</label>
                             <input type="text" class="form-control" id="analysis"
@@ -148,7 +148,7 @@
         <div class="card-header bg-secondary text-white">
             Tipos de Análisis
         </div>
-        <div class="card-body mb-3">
+        <div class="card-body mb-5">
             <div class="table-responsive">
                 <table id="analysis-table" class="table table-striped table-hover">
                     <thead class="table-dark">
@@ -169,9 +169,9 @@
     </div>
     <!-- Alineación del botón a la derecha -->
     <div class="mb-3 text-end">
-        <button type="button" class="btn " data-bs-toggle="modal" title="Agregar opción"
+        <button type="button" class="btn btn-dark" data-bs-toggle="modal" title="Agregar opción"
             data-bs-target="#modalAnalysis">
-            <i class="bi bi-plus-circle-fill"></i>
+            Nueva Opcion
         </button>
     </div>
 </div>
