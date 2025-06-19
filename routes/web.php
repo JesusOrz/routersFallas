@@ -15,9 +15,9 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
-Route::get('/routers', [RouterController::class, 'index'])
+Route::get('/tables', [RouterController::class, 'index'])
     ->middleware(['auth', 'verified'])
-    ->name('routers');
+    ->name('tables');
 
 Route::post('/routers/create', [RouterController::class, 'create'])
     ->middleware(['auth', 'verified'])

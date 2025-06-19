@@ -25,20 +25,21 @@
                 </div>
             </div>
 
-            {{-- Card: Dropdown de Análisis --}}
-            <div class="card mb-3">
-                <div class="card-header text-bg-secondary">
-                    Tipo de Análisis
-                </div>
-                <div class="card-body">
-                    <div class="mb-3">
-                        <label for="analysis_type" class="form-label">Análisis</label>
-                        <select name="analysis_type" id="analysis_type" class="form-select">
-                            <option selected disabled>Cargando opciones...</option>
-                        </select>
-                    </div>
-                </div>
+            {{-- Card: Checkboxes de Análisis --}}
+<div class="card mb-3">
+    <div class="card-header text-bg-secondary">
+        Tipo de Análisis
+    </div>
+    <div class="card-body">
+        <div class="mb-3">
+            <label class="form-label">Análisis disponibles</label>
+            <div id="analysis_type_container">
+                <!-- Aquí se insertarán los checkboxes -->
+                <div class="text-muted">Cargando opciones...</div>
             </div>
+        </div>
+    </div>
+</div>
 
 
 
@@ -59,7 +60,7 @@
                 </div>
                 <div class="card-body">
                     <div id="logs-container" class="bg-light border p-3"
-                        style="min-height: 300px; max-height: 300px; overflow-y: auto; white-space: pre-wrap;">
+                        style="min-height: 600px; max-height: 600px; overflow-y: auto; white-space: pre-wrap;">
                         <!-- Los logs se cargarán aquí -->
                     </div>
                 </div>

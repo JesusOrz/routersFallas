@@ -73,7 +73,7 @@
     </div>
 
     {{-- Resultado del análisis --}}
-    <div class="card mt-3">
+    <div class="card mb-3">
         <div class="card-header text-bg-secondary">
             Resultado del Análisis
         </div>

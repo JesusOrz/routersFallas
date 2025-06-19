@@ -2,13 +2,23 @@ $(document).ready(function () {
     $("#analizar-btn").on("click", function () {
         const analizarBtn = $("#analizar-btn");
         const resultado = $("#analisis-container");
+        const recomendaciones = $("#recomendaciones-container");
         const logs = $("#logs-container").text().trim();
-        const analysisType = $("#analysis_type").val();
-        const analysisTypeText = $("#analysis_type option:selected").text();
-        const analysisDescription = $("#analysis_type option:selected").data(
-            "description"
-        );
 
+        let selectedAnalysis = [];
+        let selectedAnalysisDescriptions = [];
+
+        $("input[name='analysis_type[]']:checked").each(function () {
+            const label = $(this)
+                .closest(".form-check")
+                .find("label")
+                .text()
+                .trim();
+            selectedAnalysis.push($(this).val());
+            selectedAnalysisDescriptions.push(label);
+        });
+
+        // Validaciones
         if (!logs) {
             Swal.fire({
                 icon: "warning",
@@ -19,11 +29,11 @@ $(document).ready(function () {
             return;
         }
 
-        if (!analysisType) {
+        if (selectedAnalysis.length === 0) {
             Swal.fire({
                 icon: "warning",
                 title: "Tipo de análisis no seleccionado",
-                text: "Selecciona una opción del tipo de análisis.",
+                text: "Selecciona al menos una opción del tipo de análisis.",
                 confirmButtonColor: "#000000",
             });
             return;
@@ -31,6 +41,7 @@ $(document).ready(function () {
 
         analizarBtn.prop("disabled", true);
         resultado.html("");
+        recomendaciones.html("");
 
         Swal.fire({
             title: "Analizando...",
@@ -49,60 +60,83 @@ $(document).ready(function () {
             },
             data: {
                 logs: logs,
-                analysis_type: analysisTypeText,
-                analysis_description: analysisDescription,
+                analysis_types: selectedAnalysis, // Enviamos array de IDs al backend
             },
             success: function (response) {
                 Swal.close();
 
                 if (response.error) {
-                    $("#analisis-container").html(
+                    resultado.html(
                         `<div class="alert alert-danger">${response.error}</div>`
                     );
-                    $("#recomendaciones-container").html(""); // Limpia recomendaciones
                     return;
                 }
 
-                // Definir colores según severidad
-                let colorClass = "alert-secondary";
-                switch (response.severidad) {
-                    case "alta":
-                        colorClass = "alert-danger";
-                        break;
-                    case "media":
-                        colorClass = "alert-warning";
-                        break;
-                    case "baja":
-                        colorClass = "alert-info";
-                        break;
-                }
+                if (Array.isArray(response.resultados)) {
+                    let html = "";
+                    let recomendacionesHTML = "";
 
-                // Mostrar análisis en el contenedor de análisis con nombre y descripción
-                $("#analisis-container").html(`
-                    <div class="alert ${colorClass}">
-                        <strong>Análisis realizado: ${analysisTypeText}<br>Severidad: ${response.severidad.toUpperCase()}</strong><br>
-                        <p><em>${analysisDescription}</em></p>
-                        <p>${response.mensaje}</p>
+                    response.resultados.forEach((res) => {
+                        let colorClass = "alert-secondary";
+                        switch (res.severidad) {
+                            case "alta":
+                                colorClass = "alert-danger";
+                                break;
+                            case "media":
+                                colorClass = "alert-warning";
+                                break;
+                            case "baja":
+                                colorClass = "alert-info";
+                                break;
+                        }
+
+                        // Mostrar análisis
+                        html += `
+            <div class="alert ${colorClass}">
+                <strong>Análisis: ${
+                    res.nombre
+                } — Severidad: ${res.severidad.toUpperCase()}</strong><br>
+                <p><em>${res.descripcion}</em></p>
+                <p>${res.mensaje}</p>
+            </div>
+        `;
+
+                        // Mostrar recomendaciones separadas
+                        if (
+                            Array.isArray(res.recomendaciones) &&
+                            res.recomendaciones.length > 0
+                        ) {
+                            recomendacionesHTML += `
+                <div class="mb-3">
+                    <div class="alert alert-success">
+                        <strong>Recomendaciones para: ${res.nombre}</strong>
+                        <ul>
+                            ${res.recomendaciones
+                                .map((rec) => `<li>${rec}</li>`)
+                                .join("")}
+                        </ul>
                     </div>
-                `);
-
-                // Mostrar recomendaciones en su contenedor aparte
-                if (
-                    Array.isArray(response.recomendaciones) &&
-                    response.recomendaciones.length > 0
-                ) {
-                    let recomendacionesHTML = "<ul>";
-                    response.recomendaciones.forEach((rec) => {
-                        recomendacionesHTML += `<li>${rec}</li>`;
+                </div>
+            `;
+                        } else {
+                            recomendacionesHTML += `
+                <div class="mb-3">
+                    <div class="alert alert-secondary">
+                        <strong>Recomendaciones para: ${res.nombre}</strong>
+                        <p>No se encontraron recomendaciones.</p>
+                    </div>
+                </div>
+            `;
+                        }
                     });
-                    recomendacionesHTML += "</ul>";
-                    $("#recomendaciones-container").html(
-                        `<div class="alert alert-success">${recomendacionesHTML}</div>`
-                    );
+
+                    $("#analisis-container").html(html);
+                    $("#recomendaciones-container").html(recomendacionesHTML);
                 } else {
-                    $("#recomendaciones-container").html(
-                        "<p>No se encontraron recomendaciones.</p>"
+                    $("#analisis-container").html(
+                        `<div class="alert alert-info">No se devolvieron resultados.</div>`
                     );
+                    $("#recomendaciones-container").html("");
                 }
             },
 
@@ -115,6 +149,7 @@ $(document).ready(function () {
                 );
                 console.error(xhr);
             },
+
             complete: function () {
                 analizarBtn.prop("disabled", false);
             },

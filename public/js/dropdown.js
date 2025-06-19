@@ -24,21 +24,36 @@ $(document).ready(function () {
             });
         },
     });
-
     $.ajax({
         url: ANALYSIS_LIST_URL,
         method: "GET",
         success: function (data) {
-            let select = $("#analysis_type");
-            select.empty();
-            select.append(
-                "<option selected disabled>Selecciona una opción</option>"
-            );
-            data.data.forEach((analysis) => {
-                select.append(
-                    `<option value="${analysis.id}" data-description="${analysis.description}">${analysis.analysis}</option>`
+            let container = $("#analysis_type_container");
+            container.empty(); // Limpiar contenido previo
+
+            if (data.data.length === 0) {
+                container.append(
+                    "<div class='text-muted'>No hay tipos de análisis disponibles.</div>"
                 );
-            });
+            } else {
+                data.data.forEach((analysis) => {
+                    let checkbox = `
+                    <div class="form-check">
+                        <input 
+                            class="form-check-input" 
+                            type="checkbox" 
+                            name="analysis_type[]" 
+                            value="${analysis.id}" 
+                            id="analysis-${analysis.id}" 
+                            data-description="${analysis.description}">
+                        <label class="form-check-label" for="analysis-${analysis.id}">
+                            ${analysis.analysis}
+                        </label>
+                    </div>
+                `;
+                    container.append(checkbox);
+                });
+            }
         },
         error: function () {
             Swal.fire({
@@ -48,7 +63,6 @@ $(document).ready(function () {
                 showConfirmButton: false,
                 timer: 1500,
             });
-
             console.log(ANALYSIS_LIST_URL);
         },
     });

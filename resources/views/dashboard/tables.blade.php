@@ -1,16 +1,9 @@
 @extends('layouts.app')
 
-@section('title', 'Routers')
+@section('title', 'Tables')
 
 @section('content')
 <div class="container py-4">
-    <h1 class="mt-4 mb-3">Routers</h1>
-    <nav aria-label="breadcrumb" class="mb-4">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item active" aria-current="page">Routers</li>
-        </ol>
-    </nav>
-
 
     {{-- Modal Crear Router --}}
     <div class="modal fade" id="modalConnect" tabindex="-1" aria-labelledby="modalConnectLabel" aria-hidden="true">
@@ -110,6 +103,44 @@
         </div>
     </div>
 
+
+    <h1 class="mt-4 mb-3">Keys</h1>
+
+    {{-- Tabla de keys en Card --}}
+    <div class="card mb-5">
+        <div class="card-header bg-dark text-white">
+            Mis API keys
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="keys-table" class="table table-striped table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>IA</th>
+                            <th>key</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{-- Aquí se llenará dinámicamente --}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+    <!-- Alineación del botón a la derecha -->
+    <div class="mb-3 text-end">
+        <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#modalConnect">
+            Nuevo Router
+        </button>
+    </div>
+
+
+
+    <h1 class="mt-4 mb-3">Routers</h1>
+
     {{-- Tabla de Routers en Card --}}
     <div class="card mb-5">
         <div class="card-header bg-dark text-white">
@@ -142,10 +173,11 @@
             Nuevo Router
         </button>
     </div>
+    <h1 class="mt-4 mb-3">Análisis</h1>
 
     {{-- Tabla de Análisis en Card --}}
     <div class="card">
-        <div class="card-header bg-secondary text-white">
+        <div class="card-header bg-dark text-white">
             Tipos de Análisis
         </div>
         <div class="card-body mb-5">

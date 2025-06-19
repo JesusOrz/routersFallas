@@ -9,9 +9,9 @@
                 </a>
                 <div class="sb-sidenav-menu-heading">Addons</div>
 
-                <a class="nav-link" href="{{ route('routers') }}">
-                    <div class="sb-nav-link-icon"><i class="bi bi-router-fill"></i></div>
-                    Routers
+                <a class="nav-link" href="{{ route('tables') }}">
+                    <div class="sb-nav-link-icon"><i class="bi bi-table"></i></div>
+                    Tables
                 </a>
 
                 <a class="nav-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">

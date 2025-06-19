@@ -11,7 +11,7 @@ class RouterController extends Controller
 
     public function index()
     {
-        return view('dashboard.routers');
+        return view('dashboard.tables');
     }
 
 
