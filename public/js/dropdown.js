@@ -24,6 +24,37 @@ $(document).ready(function () {
             });
         },
     });
+
+
+
+    $.ajax({
+        url: IA_JSON_URL,
+        method: "GET",
+        success: function (data) {
+            let select = $("#ia_id");
+            select.empty();
+            select.append(
+                "<option selected disabled>Selecciona un IA</option>"
+            );
+            data.data.forEach((ia) => {
+                select.append(
+                    `<option value="${ia.id}">${ia.ia}: ${ia.model}</option>`
+                );
+            });
+        },
+        error: function () {
+            Swal.fire({
+                position: "top-end",
+                icon: "warning",
+                title: "Error al cargar los routers.",
+                showConfirmButton: false,
+                timer: 1500,
+            });
+        },
+    });
+
+
+
     $.ajax({
         url: ANALYSIS_LIST_URL,
         method: "GET",

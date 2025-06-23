@@ -1,4 +1,6 @@
 $(document).ready(function () {
+
+    
     let table = $("#routers-table").DataTable({
         ajax: ROUTERS_JSON_URL,
         columns: [
@@ -48,6 +50,104 @@ $(document).ready(function () {
                 },
             },
         ],
+    });
+
+    let tableKeys = $("#keys-table").DataTable({
+    ajax: KEYS_JSON_URL,
+    columns: [
+        { data: "id" },
+        { data: "key" },
+        { data: "ia_name" }, 
+        { data: "ia_model" }, // Mostrará "ChatGPT: gpt-4" por ejemplo
+        {
+            data: null,
+            render: function (data, type, row) {
+                return `
+                    <button class="btn btn-sm btn-primary edit-btn" data-id="${row.id}">
+                        <i class="bi bi-pencil-square"></i> Editar
+                    </button>
+                `;
+            },
+        },
+    ],
+});
+
+
+    $("#createIA").click(function () {
+        const ia = $("#iaName").val();
+        const model=$("#modelIA").val();
+
+
+        $.ajax({
+            url: IA_STORE_URL,
+            method: "POST",
+            data: {
+                _token: CSRF_TOKEN,
+                ia: ia,
+                model: model,
+            },
+            success: function (response) {
+                if (response.success) {
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "Registro agregado correctamente",
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
+                    table.ajax.reload();
+                    $("#iaName, #modelIA").val("");
+                    $("#modalNewIa").modal("hide");
+                }
+            },
+            error: function (xhr) {
+                const errors = xhr.responseJSON.errors;
+                let msg = "";
+                for (let field in errors) {
+                    msg += errors[field][0] + "\n";
+                }
+                alert(msg);
+            },
+        });
+    });
+
+    $("#btnCreateKey").click(function () {
+        const key = $("#key").val();
+        const ia_id=$("#ia_id").val();
+
+
+        $.ajax({
+            url: KEYS_STORE_URL,
+            method: "POST",
+            data: {
+                _token: CSRF_TOKEN,
+                key: key,
+                ia_id: ia_id,
+                user_id:USER_ID,
+            },
+            success: function (response) {
+                if (response.success) {
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "Registro agregado correctamente",
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
+                    tableKeys.ajax.reload();
+                    $("#key, #ia_id").val("");
+                    $("#modalKeys").modal("hide");
+                }
+            },
+            error: function (xhr) {
+                const errors = xhr.responseJSON.errors;
+                let msg = "";
+                for (let field in errors) {
+                    msg += errors[field][0] + "\n";
+                }
+                alert(msg);
+            },
+        });
     });
 
     $("#btnCreate").click(function () {
@@ -174,7 +274,7 @@ $(document).ready(function () {
                         text: response.analysis.analysis
                     })
                 ).val(response.analysis.id);
-
+                tableAnalysis.ajax.reload();
                 $("#analysis, #description").val("");
                 $("#modalAnalysis").modal("hide");
             }

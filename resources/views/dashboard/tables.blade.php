@@ -5,6 +5,32 @@
 @section('content')
 <div class="container py-4">
 
+    {{-- Modal Crear IA --}}
+    <div class="modal fade" id="modalNewIa" tabindex="-1" aria-labelledby="modalNewIaLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalNewIaLabel">Agregar nueva IA</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formNewIa">
+                        <div class="mb-3">
+                            <label for="iaName" class="form-label">Nombre de la IA</label>
+                            <input type="text" class="form-control" id="iaName" placeholder="Ej. ChatGPT" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="modelIA" class="form-label">Modelo</label>
+                            <input type="text" class="form-control" id="modelIA" placeholder="Ej. openai/gpt-3.5-turbo"
+                                required>
+                        </div>
+                        <button type="button" id="createIA" class="btn btn-success w-100">Agregar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     {{-- Modal Crear Router --}}
     <div class="modal fade" id="modalConnect" tabindex="-1" aria-labelledby="modalConnectLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -103,6 +129,44 @@
         </div>
     </div>
 
+    {{-- Modal Crear Key --}}
+    <div class="modal fade" id="modalKeys" tabindex="-1" aria-labelledby="modalKeysLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalKeysLabel">Agrega una opción</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formCreateKey">
+                        <div class="mb-3">
+                            <label for="key" class="form-label">API Key (Esta se encriptara por seguridad)</label>
+                            <input type="text" class="form-control" id="key" placeholder="ej. sk-xxxxxxxxxxxxxxxxxxx"
+                                required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="ia_id" class="form-label">IAs disponibles</label>
+                            <select name="ia_id" id="ia_id" class="form-select">
+                                <option selected disabled>Cargando IAs...</option>
+                            </select>
+                        </div>
+
+                        <button type="button" class="btn btn-primary w-100" id="btnCreateKey">Agregar</button>
+                        <!-- Botón para abrir modal de creación de IA -->
+                        <div class="mb-3">
+                            <label class="form-label">¿No aparece tu IA?<a href="" data-bs-toggle="modal"
+                                    data-bs-target="#modalNewIa">Click aqui</a></label><br>
+
+                        </div>
+
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 
     <h1 class="mt-4 mb-3">Keys</h1>
 
@@ -117,8 +181,9 @@
                     <thead class="table-dark">
                         <tr>
                             <th>ID</th>
+                            <th>Key (Encriptada)</th>
                             <th>IA</th>
-                            <th>key</th>
+                            <th>Modelo</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -132,8 +197,8 @@
     </div>
     <!-- Alineación del botón a la derecha -->
     <div class="mb-3 text-end">
-        <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#modalConnect">
-            Nuevo Router
+        <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#modalKeys">
+            Agregar API key
         </button>
     </div>
 

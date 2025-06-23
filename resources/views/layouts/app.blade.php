@@ -48,6 +48,11 @@
     
     <script>
     const CSRF_TOKEN = "{{ csrf_token() }}";
+    const USER_ID = "{{ Auth::user()->id ?? 'ID' }}";
+    const IA_JSON_URL = "{{ route('ia.json') }}";
+    const KEYS_JSON_URL = "{{ route('keys.json') }}";
+    const KEYS_STORE_URL = "{{ route('keys.create') }}";
+    const IA_STORE_URL = "{{ route('ia.create') }}";
     const ROUTERS_STORE_URL = "{{ route('routers.create') }}";
     const ANALYSIS_STORE_URL = "{{ route('analysis.create') }}";
     const ROUTERS_JSON_URL = "{{ route('routers.json') }}";
@@ -56,6 +61,7 @@
     const UPLOAD_LOG = "{{ route('logs.upload') }}"
     const ANALYZE_LOG = "{{ route('logs.analizar') }}"
     const ANALYSIS_LIST_URL = "{{ url('/tipo-analisis') }}";
+
     </script>
 
 

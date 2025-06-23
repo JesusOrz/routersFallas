@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ArtificialIntelligenceController;
+use App\Http\Controllers\KeysController;
 use App\Http\Controllers\RouterController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\AnalysisController;
@@ -35,10 +37,21 @@ Route::get('/logs/{id}', [LogController::class, 'show'])
     ->middleware(['auth', 'verified'])
     ->name('logs.show');
 
+Route::post('/ia/create', [ArtificialIntelligenceController::class, 'create'])
+    ->middleware(['auth', 'verified'])
+    ->name('ia.create');
+
 Route::post('/analysis/create', [AnalysisController::class, 'create'])
     ->middleware(['auth', 'verified'])
     ->name('analysis.create');
 
+Route::post('/keys/create', [KeysController::class, 'create'])
+    ->middleware(['auth', 'verified'])
+    ->name('keys.create');
+
+Route::get('/ia/json', [ArtificialIntelligenceController::class, 'getIA'])->name('ia.json');
+
+Route::get('/keys/json', [KeysController::class, 'getKeys'])->name('keys.json');
 
 Route::get('/routers/json', [RouterController::class, 'getRouters'])->name('routers.json');
 Route::put('/routers/update/{id}', [RouterController::class, 'update'])->name('routers.update');

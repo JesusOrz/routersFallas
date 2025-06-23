@@ -11,21 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-       Schema::create('routers', function (Blueprint $table) {
+        Schema::create('artificial_intelligence', function (Blueprint $table) {
             $table->id();
-            $table->string('host');
-            $table->string('user');
-            $table->string('password');
-            $table->integer('port')->default(8728);
-            $table->enum('state', ['activo', 'inactivo'])->default('activo');
+            $table->string('ia');
+            $table->string('model');
             $table->timestamps();
         });
     }
+
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('routers');
+        Schema::dropIfExists('artificial_intelligence');
     }
 };

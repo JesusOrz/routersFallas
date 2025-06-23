@@ -11,21 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-       Schema::create('routers', function (Blueprint $table) {
+        Schema::create('api-keys', function (Blueprint $table) {
             $table->id();
-            $table->string('host');
-            $table->string('user');
-            $table->string('password');
-            $table->integer('port')->default(8728);
-            $table->enum('state', ['activo', 'inactivo'])->default('activo');
+            $table->string('key');
+            $table->foreignId('ia_id')->constrained('artificial_intelligence')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
+
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('routers');
+        Schema::dropIfExists('api-keys');
     }
 };
