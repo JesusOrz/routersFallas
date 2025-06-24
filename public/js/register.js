@@ -1,5 +1,5 @@
 $(document).ready(function () {
-
+cargarDropdownIAs()
     
     let table = $("#routers-table").DataTable({
         ajax: ROUTERS_JSON_URL,
@@ -58,7 +58,7 @@ $(document).ready(function () {
         { data: "id" },
         { data: "key" },
         { data: "ia_name" }, 
-        { data: "ia_model" }, // Mostrará "ChatGPT: gpt-4" por ejemplo
+        { data: "ia_model" }, 
         {
             data: null,
             render: function (data, type, row) {
@@ -95,7 +95,7 @@ $(document).ready(function () {
                         showConfirmButton: false,
                         timer: 1500,
                     });
-                    table.ajax.reload();
+                    cargarDropdownIAs()
                     $("#iaName, #modelIA").val("");
                     $("#modalNewIa").modal("hide");
                 }
@@ -289,6 +289,32 @@ $(document).ready(function () {
         },
     });
 });
+
+function cargarDropdownIAs() {
+    $.ajax({
+        url: IA_JSON_URL,
+        method: "GET",
+        success: function (data) {
+            let select = $("#ia_id");
+            select.empty();
+            select.append("<option selected disabled>Selecciona un IA</option>");
+            data.data.forEach((ia) => {
+                select.append(
+                    `<option value="${ia.model}" data-id="${ia.id}">${ia.ia}: ${ia.model}</option>`
+                );
+            });
+        },
+        error: function () {
+            Swal.fire({
+                position: "top-end",
+                icon: "warning",
+                title: "Error al cargar los modelos IA.",
+                showConfirmButton: false,
+                timer: 1500,
+            });
+        },
+    });
+}
 
 
 });

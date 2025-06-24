@@ -25,21 +25,36 @@
                 </div>
             </div>
 
-            {{-- Card: Checkboxes de Análisis --}}
-<div class="card mb-3">
-    <div class="card-header text-bg-secondary">
-        Tipo de Análisis
-    </div>
-    <div class="card-body">
-        <div class="mb-3">
-            <label class="form-label">Análisis disponibles</label>
-            <div id="analysis_type_container">
-                <!-- Aquí se insertarán los checkboxes -->
-                <div class="text-muted">Cargando opciones...</div>
+            {{-- Card: Dropdown de IAs --}}
+            <div class="card mb-3">
+                <div class="card-header text-bg-secondary">
+                    Selección de IAs
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                            <label for="ia_id" class="form-label">IAs disponibles</label>
+                            <select name="ia_id" id="ia_id" class="form-select">
+                                <option selected disabled>Cargando IAs...</option>
+                            </select>
+                        </div>
+                </div>
             </div>
-        </div>
-    </div>
-</div>
+
+            {{-- Card: Checkboxes de Análisis --}}
+            <div class="card mb-3">
+                <div class="card-header text-bg-secondary">
+                    Tipo de Análisis
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label">Análisis disponibles</label>
+                        <div id="analysis_type_container">
+                            <!-- Aquí se insertarán los checkboxes -->
+                            <div class="text-muted">Cargando opciones...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 
 
