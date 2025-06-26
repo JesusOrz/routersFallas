@@ -5,31 +5,6 @@
 @section('content')
 <div class="container py-4">
 
-    {{-- Modal Crear IA --}}
-    <div class="modal fade" id="modalNewIa" tabindex="-1" aria-labelledby="modalNewIaLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalNewIaLabel">Agregar nueva IA</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="formNewIa">
-                        <div class="mb-3">
-                            <label for="iaName" class="form-label">Nombre de la IA</label>
-                            <input type="text" class="form-control" id="iaName" placeholder="Ej. ChatGPT" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="modelIA" class="form-label">Modelo</label>
-                            <input type="text" class="form-control" id="modelIA" placeholder="Ej. openai/gpt-3.5-turbo"
-                                required>
-                        </div>
-                        <button type="button" id="createIA" class="btn btn-success w-100">Agregar</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
 
     {{-- Modal Crear Router --}}
     <div class="modal fade" id="modalConnect" tabindex="-1" aria-labelledby="modalConnectLabel" aria-hidden="true">
@@ -152,13 +127,6 @@
                         </div>
 
                         <button type="button" class="btn btn-primary w-100" id="btnCreateKey">Agregar</button>
-                        <!-- Botón para abrir modal de creación de IA -->
-                        <div class="mb-3">
-                            <label class="form-label">¿No aparece tu IA?<a href="" data-bs-toggle="modal"
-                                    data-bs-target="#modalNewIa">Click aqui</a></label><br>
-
-                        </div>
-
 
                     </form>
                 </div>

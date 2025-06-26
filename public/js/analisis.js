@@ -4,6 +4,8 @@ $(document).ready(function () {
         const resultado = $("#analisis-container");
         const recomendaciones = $("#recomendaciones-container");
         const logs = $("#logs-container").text().trim();
+        const provider = $("#provider_id").val();
+        const model = $("#model_id").val();
 
         let selectedAnalysis = [];
         let selectedAnalysisDescriptions = [];
@@ -24,6 +26,16 @@ $(document).ready(function () {
                 icon: "warning",
                 title: "Sin logs cargados",
                 text: "Por favor, selecciona un router primero.",
+                confirmButtonColor: "#000000",
+            });
+            return;
+        }
+
+        if (!provider || !model) {
+            Swal.fire({
+                icon: "warning",
+                title: "Faltan datos",
+                text: "Debes seleccionar un proveedor y modelo de IA.",
                 confirmButtonColor: "#000000",
             });
             return;
@@ -53,14 +65,16 @@ $(document).ready(function () {
         });
 
         $.ajax({
-            url: ANALYZE_LOG,
+            url: ANALYZE_LOG, 
             method: "POST",
             headers: {
-                "X-CSRF-TOKEN": CSRF_TOKEN,
+                "X-CSRF-TOKEN": CSRF_TOKEN, 
             },
             data: {
                 logs: logs,
-                analysis_types: selectedAnalysis, // Enviamos array de IDs al backend
+                analysis_types: selectedAnalysis,
+                ia_provider: provider,
+                ia_model: model
             },
             success: function (response) {
                 Swal.close();
@@ -77,8 +91,10 @@ $(document).ready(function () {
                     let recomendacionesHTML = "";
 
                     response.resultados.forEach((res) => {
+                        const datos = res.resultado || {};
                         let colorClass = "alert-secondary";
-                        switch (res.severidad) {
+
+                        switch ((datos.severidad || "").toLowerCase()) {
                             case "alta":
                                 colorClass = "alert-danger";
                                 break;
@@ -90,66 +106,51 @@ $(document).ready(function () {
                                 break;
                         }
 
-                        // Mostrar análisis
                         html += `
-            <div class="alert ${colorClass}">
-                <strong>Análisis: ${
-                    res.nombre
-                } — Severidad: ${res.severidad.toUpperCase()}</strong><br>
-                <p><em>${res.descripcion}</em></p>
-                <p>${res.mensaje}</p>
-            </div>
-        `;
+                            <div class="alert ${colorClass}">
+                                <strong>Análisis: ${res.nombre} — Severidad: ${datos.severidad?.toUpperCase() || 'N/A'}</strong><br>
+                                <p><em>${res.descripcion}</em></p>
+                                <p>${datos.mensaje || 'Sin mensaje'}</p>
+                            </div>
+                        `;
 
-                        // Mostrar recomendaciones separadas
-                        if (
-                            Array.isArray(res.recomendaciones) &&
-                            res.recomendaciones.length > 0
-                        ) {
+                        if (Array.isArray(datos.recomendaciones) && datos.recomendaciones.length > 0) {
                             recomendacionesHTML += `
-                <div class="mb-3">
-                    <div class="alert alert-success">
-                        <strong>Recomendaciones para: ${res.nombre}</strong>
-                        <ul>
-                            ${res.recomendaciones
-                                .map((rec) => `<li>${rec}</li>`)
-                                .join("")}
-                        </ul>
-                    </div>
-                </div>
-            `;
+                                <div class="mb-3">
+                                    <div class="alert alert-success">
+                                        <strong>Recomendaciones para: ${res.nombre}</strong>
+                                        <ul>
+                                            ${datos.recomendaciones.map(rec => `<li>${rec}</li>`).join("")}
+                                        </ul>
+                                    </div>
+                                </div>
+                            `;
                         } else {
                             recomendacionesHTML += `
-                <div class="mb-3">
-                    <div class="alert alert-secondary">
-                        <strong>Recomendaciones para: ${res.nombre}</strong>
-                        <p>No se encontraron recomendaciones.</p>
-                    </div>
-                </div>
-            `;
+                                <div class="mb-3">
+                                    <div class="alert alert-secondary">
+                                        <strong>Recomendaciones para: ${res.nombre}</strong>
+                                        <p>No se encontraron recomendaciones.</p>
+                                    </div>
+                                </div>
+                            `;
                         }
                     });
 
-                    $("#analisis-container").html(html);
-                    $("#recomendaciones-container").html(recomendacionesHTML);
+                    resultado.html(html);
+                    recomendaciones.html(recomendacionesHTML);
                 } else {
-                    $("#analisis-container").html(
-                        `<div class="alert alert-info">No se devolvieron resultados.</div>`
-                    );
-                    $("#recomendaciones-container").html("");
+                    resultado.html(`<div class="alert alert-info">No se devolvieron resultados.</div>`);
+                    recomendaciones.html("");
                 }
             },
-
             error: function (xhr, status, error) {
                 Swal.close();
                 resultado.html(
-                    `<div class="alert alert-danger">Error: ${
-                        xhr.responseText || error
-                    }</div>`
+                    `<div class="alert alert-danger">Error: ${xhr.responseText || error}</div>`
                 );
                 console.error(xhr);
             },
-
             complete: function () {
                 analizarBtn.prop("disabled", false);
             },

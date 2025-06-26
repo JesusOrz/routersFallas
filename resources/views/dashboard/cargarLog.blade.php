@@ -49,10 +49,11 @@
                 </div>
                 <div class="card-body">
                     <div class="mb-3">
-                        <label for="analysis_type" class="form-label">Análisis</label>
-                        <select name="analysis_type" id="analysis_type" class="form-select">
-                            <option selected disabled>Cargando opciones...</option>
-                        </select>
+                        <label class="form-label">Análisis disponibles</label>
+                        <div id="analysis_type_container">
+                            <!-- Aquí se insertarán los checkboxes -->
+                            <div class="text-muted">Cargando opciones...</div>
+                        </div>
                     </div>
                 </div>
             </div>

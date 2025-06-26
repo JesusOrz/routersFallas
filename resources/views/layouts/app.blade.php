@@ -51,11 +51,10 @@
     const USER_ID = "{{ Auth::user()->id ?? 'ID' }}";
     const IA_JSON_URL = "{{ route('ia.json') }}";
     const KEYS_JSON_URL = "{{ route('keys.json') }}";
+    const ROUTERS_JSON_URL = "{{ route('routers.json') }}";
     const KEYS_STORE_URL = "{{ route('keys.create') }}";
-    const IA_STORE_URL = "{{ route('ia.create') }}";
     const ROUTERS_STORE_URL = "{{ route('routers.create') }}";
     const ANALYSIS_STORE_URL = "{{ route('analysis.create') }}";
-    const ROUTERS_JSON_URL = "{{ route('routers.json') }}";
     const ROUTERS_UPDATE_URL = "{{ url('/routers/update') }}";
     const GET_LOG = "{{ route('logs.get') }}"
     const UPLOAD_LOG = "{{ route('logs.upload') }}"

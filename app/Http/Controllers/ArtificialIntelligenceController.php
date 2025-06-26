@@ -18,15 +18,4 @@ class ArtificialIntelligenceController extends Controller
 
         return response()->json(['data' => $ias]);
     }
-        public function create(Request $request)
-    {
-        $validated = $request->validate([
-            'ia' => 'required|string',
-            'model' => 'required|string',
-        ]);
-
-        $ia = ArtificialIntelligence::create($validated);
-
-        return response()->json(['success' => true, 'ia' => $ia]);
-    }
 }

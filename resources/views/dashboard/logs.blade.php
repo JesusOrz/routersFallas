@@ -28,13 +28,28 @@
             {{-- Card: Dropdown de IAs --}}
             <div class="card mb-3">
                 <div class="card-header text-bg-secondary">
-                    Selección de IAs
+                    Selección de Proveedor
                 </div>
                 <div class="card-body">
                     <div class="mb-3">
-                            <label for="ia_id" class="form-label">IAs disponibles</label>
-                            <select name="ia_id" id="ia_id" class="form-select">
-                                <option selected disabled>Cargando IAs...</option>
+                            <label for="provider_id" class="form-label">Proveedores disponibles</label>
+                            <select name="provider_id" id="provider_id" class="form-select">
+                                <option selected disabled>Cargando...</option>
+                            </select>
+                        </div>
+                </div>
+            </div>
+
+            {{-- Card: Dropdown de IAs --}}
+            <div class="card mb-3">
+                <div class="card-header text-bg-secondary">
+                    Selección de Modelos
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                            <label for="model_id" class="form-label">Modelos disponibles</label>
+                            <select name="model_id" id="model_id" class="form-select">
+                                <option selected disabled>Esperando proveedor...</option>
                             </select>
                         </div>
                 </div>

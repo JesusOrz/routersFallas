@@ -37,10 +37,6 @@ Route::get('/logs/{id}', [LogController::class, 'show'])
     ->middleware(['auth', 'verified'])
     ->name('logs.show');
 
-Route::post('/ia/create', [ArtificialIntelligenceController::class, 'create'])
-    ->middleware(['auth', 'verified'])
-    ->name('ia.create');
-
 Route::post('/analysis/create', [AnalysisController::class, 'create'])
     ->middleware(['auth', 'verified'])
     ->name('analysis.create');
