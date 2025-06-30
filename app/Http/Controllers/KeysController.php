@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Keys;
+use App\Models\ArtificialIntelligence;
 
 class KeysController extends Controller
 {
@@ -25,16 +26,28 @@ class KeysController extends Controller
 
 
     public function create(Request $request)
-    {
-        $validated = $request->validate([
-            'key' => 'required|string',
-            'ia_id' => 'required|string',
-            'user_id' => 'required|string',
-        ]);
+{
+    $validated = $request->validate([
+        'key' => 'required|string',
+        'ia' => 'required|string',
+        'model' => 'required|string',
+        'user_id' => 'required|integer',
+    ]);
 
-        $ia = Keys::create($validated);
+    $iaRow = ArtificialIntelligence::where('ia', $validated['ia'])
+                                   ->where('model', $validated['model'])
+                                   ->first();
 
-        return response()->json(['success' => true, 'IA' => $ia]);
+    if (!$iaRow) {
+        return response()->json(['success' => false, 'errors' => ['model' => ['Proveedor o modelo no válido.']]], 422);
     }
 
+    $key = Keys::create([
+        'key' => $validated['key'],
+        'ia_id' => $iaRow->id,
+        'user_id' => $validated['user_id'],
+    ]);
+
+    return response()->json(['success' => true, 'IA' => $key]);
+}
 }

@@ -26,43 +26,39 @@ $(document).ready(function () {
         },
     });
 
-    let $providerSelect = $('#provider_id');
-    let $modelSelect = $('#model_id');
-    $.ajax({
-        url: IA_JSON_URL,
-        method: 'GET',
-        success: function (response) {
-            const iaData = response.data;
+let $providerSelect = $('#provider_id');
+let $modelSelect = $('#model_id');
 
-            // Extraer proveedores únicos
-            const proveedoresUnicos = [...new Set(iaData.map(item => item.ia))];
+$.ajax({
+    url: IA_JSON_URL,
+    method: 'GET',
+    success: function (response) {
+        const iaData = response.data;
 
-            // Llenar dropdown de proveedores
-            $providerSelect.empty().append('<option selected disabled>Selecciona un proveedor</option>');
-            proveedoresUnicos.forEach(proveedor => {
-                $providerSelect.append(`<option value="${proveedor}">${proveedor}</option>`);
+        const proveedoresUnicos = [...new Set(iaData.map(item => item.ia))];
+
+        $providerSelect.empty().append('<option selected disabled>Selecciona un proveedor</option>');
+        proveedoresUnicos.forEach(proveedor => {
+            $providerSelect.append(`<option value="${proveedor}">${proveedor}</option>`);
+        });
+
+        $providerSelect.on('change', function () {
+            const proveedorSeleccionado = $(this).val();
+
+            const modelos = iaData
+                .filter(item => item.ia === proveedorSeleccionado)
+                .map(item => item.model);
+
+            $modelSelect.empty().append('<option selected disabled>Selecciona un modelo</option>');
+            modelos.forEach(modelo => {
+                $modelSelect.append(`<option value="${modelo}">${modelo}</option>`);
             });
-
-            // Cuando seleccionas un proveedor, mostrar modelos correspondientes
-            $providerSelect.on('change', function () {
-                const proveedorSeleccionado = $(this).val();
-
-                // Filtrar modelos según el proveedor
-                const modelos = iaData
-                    .filter(item => item.ia === proveedorSeleccionado)
-                    .map(item => item.model);
-
-                // Llenar el select de modelos
-                $modelSelect.empty().append('<option selected disabled>Selecciona un modelo</option>');
-                modelos.forEach(modelo => {
-                    $modelSelect.append(`<option value="${modelo}">${modelo}</option>`);
-                });
-            });
-        },
-        error: function () {
-            alert('Error al cargar proveedores y modelos.');
-        }
-    });
+        });
+    },
+    error: function () {
+        alert('Error al cargar proveedores y modelos.');
+    }
+});
 
 
     $.ajax({

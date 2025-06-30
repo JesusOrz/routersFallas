@@ -119,12 +119,29 @@
                             <input type="text" class="form-control" id="key" placeholder="ej. sk-xxxxxxxxxxxxxxxxxxx"
                                 required>
                         </div>
-                        <div class="mb-3">
-                            <label for="ia_id" class="form-label">IAs disponibles</label>
-                            <select name="ia_id" id="ia_id" class="form-select">
-                                <option selected disabled>Cargando IAs...</option>
-                            </select>
-                        </div>
+                        
+                            
+                           
+                                <div class="mb-3">
+                                    <label for="provider_id" class="form-label">Proveedores disponibles</label>
+                                    <select name="provider_id" id="provider_id" class="form-select">
+                                        <option selected disabled>Cargando...</option>
+                                    </select>
+                                </div>
+                           
+                       
+
+                        {{-- Card: Dropdown de IAs --}}
+                        
+                           
+                                <div class="mb-3">
+                                    <label for="model_id" class="form-label">Modelos disponibles</label>
+                                    <select name="model_id" id="model_id" class="form-select">
+                                        <option selected disabled>Esperando proveedor...</option>
+                                    </select>
+                                </div>
+                            
+                       
 
                         <button type="button" class="btn btn-primary w-100" id="btnCreateKey">Agregar</button>
 

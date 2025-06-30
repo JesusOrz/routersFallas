@@ -1,5 +1,5 @@
 $(document).ready(function () {
-cargarDropdownIAs()
+
     
     let table = $("#routers-table").DataTable({
         ajax: ROUTERS_JSON_URL,
@@ -112,43 +112,47 @@ cargarDropdownIAs()
     });
 
     $("#btnCreateKey").click(function () {
-        const key = $("#key").val();
-        const ia_id=$("#ia_id").val();
+    const key = $("#key").val();
+    const proveedor = $("#provider_id").val(); 
+    const modelo = $("#model_id").val();     
 
 
-        $.ajax({
-            url: KEYS_STORE_URL,
-            method: "POST",
-            data: {
-                _token: CSRF_TOKEN,
-                key: key,
-                ia_id: ia_id,
-                user_id:USER_ID,
-            },
-            success: function (response) {
-                if (response.success) {
-                    Swal.fire({
-                        position: "top-end",
-                        icon: "success",
-                        title: "Registro agregado correctamente",
-                        showConfirmButton: false,
-                        timer: 1500,
-                    });
-                    tableKeys.ajax.reload();
-                    $("#key, #ia_id").val("");
-                    $("#modalKeys").modal("hide");
-                }
-            },
-            error: function (xhr) {
-                const errors = xhr.responseJSON.errors;
-                let msg = "";
-                for (let field in errors) {
-                    msg += errors[field][0] + "\n";
-                }
-                alert(msg);
-            },
-        });
+    $.ajax({
+        url: KEYS_STORE_URL,
+        method: "POST",
+        data: {
+            _token: CSRF_TOKEN,
+            key: key,
+            ia: proveedor,       
+            model: modelo,
+            user_id: USER_ID,
+        },
+        success: function (response) {
+            if (response.success) {
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Registro agregado correctamente",
+                    showConfirmButton: false,
+                    timer: 1500,
+                });
+                tableKeys.ajax.reload();
+                $("#key, #provider_id, #model_id").val("");
+                $("#modalKeys").modal("hide");
+            }
+        },
+        error: function (xhr) {
+            const errors = xhr.responseJSON?.errors || {};
+            let msg = "Error desconocido";
+            for (let field in errors) {
+                msg = errors[field][0];
+            }
+            alert(msg);
+            $("#key, #provider_id, #model_id").val("");
+        },
     });
+});
+
 
     $("#btnCreate").click(function () {
         const host = $("#host").val();
@@ -289,32 +293,6 @@ cargarDropdownIAs()
         },
     });
 });
-
-function cargarDropdownIAs() {
-    $.ajax({
-        url: IA_JSON_URL,
-        method: "GET",
-        success: function (data) {
-            let select = $("#ia_id");
-            select.empty();
-            select.append("<option selected disabled>Selecciona un IA</option>");
-            data.data.forEach((ia) => {
-                select.append(
-                    `<option value="${ia.model}" data-id="${ia.id}">${ia.ia}: ${ia.model}</option>`
-                );
-            });
-        },
-        error: function () {
-            Swal.fire({
-                position: "top-end",
-                icon: "warning",
-                title: "Error al cargar los modelos IA.",
-                showConfirmButton: false,
-                timer: 1500,
-            });
-        },
-    });
-}
 
 
 });
