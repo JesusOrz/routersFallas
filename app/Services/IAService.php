@@ -1,23 +1,40 @@
 <?php
-
 namespace App\Services;
 
 use Illuminate\Support\Facades\Http;
+use App\Models\Keys;
+use App\Models\ArtificialIntelligence;
 
 class IAService
 {
-    public static function analizarConIA($provider, $model, $logs, $tipo, $descripcion)
+    public static function analizarConIA($provider, $model, $logs, $tipo, $descripcion, $userId = null)
     {
-        $prompt = "Realiza un análisis del siguiente tipo: *{$tipo}*.\n" .
-                  "Descripción: {$descripcion}\n\nLogs:\n{$logs}\n\n" .
-                  "Responde SOLO con JSON:\n" .
-                  "{ \"severidad\": \"alta|media|baja\", \"mensaje\": \"...\", \"recomendaciones\": [\"...\", \"...\"] }";
+        $apiKey = self::obtenerApiKey($provider, $model, $userId);
+        if (!$apiKey) {
+            return ['error' => 'No se encontró API key válida para ' . $provider . ' - ' . $model];
+        }
+
+        $prompt = <<<EOT
+Eres un experto en redes que analiza logs de routers MikroTik.
+
+Tipo de análisis: {$tipo}
+Descripción: {$descripcion}
+
+Logs:
+{$logs}
+
+Devuelve únicamente un JSON válido en este formato, sin explicaciones ni texto adicional:
+
+{
+  "severidad": "alta|media|baja",
+  "mensaje": "Descripción breve del problema detectado",
+  "recomendaciones": ["Recomendación 1", "Recomendación 2"]
+}
+EOT;
 
         switch ($provider) {
             case 'OpenRouter':
-                $apiKey = env('OPENROUTER_API_KEY');
                 $url = 'https://openrouter.ai/api/v1/chat/completions';
-
                 $response = Http::withHeaders([
                     'Authorization' => 'Bearer ' . $apiKey,
                     'Content-Type' => 'application/json',
@@ -31,9 +48,7 @@ class IAService
                 break;
 
             case 'OpenAI':
-                $apiKey = env('OPENAI_API_KEY');
                 $url = 'https://api.openai.com/v1/chat/completions';
-
                 $response = Http::withHeaders([
                     'Authorization' => 'Bearer ' . $apiKey,
                     'Content-Type' => 'application/json',
@@ -47,9 +62,7 @@ class IAService
                 break;
 
             case 'Gemini':
-                $apiKey = env('GEMINI_API_KEY');
                 $url = "https://generativelanguage.googleapis.com/v1beta/models/{$model}:generateContent?key={$apiKey}";
-
                 $response = Http::withHeaders([
                     'Content-Type' => 'application/json',
                 ])->post($url, [
@@ -60,9 +73,23 @@ class IAService
                 break;
 
             default:
-                return null;
+                return ['error' => 'Proveedor de IA no válido'];
         }
 
         return $response->json();
+    }
+
+    private static function obtenerApiKey($provider, $model, $userId = null)
+    {
+        $ia = ArtificialIntelligence::where('ia', $provider)
+                                    ->where('model', $model)
+                                    ->first();
+
+        if (!$ia) return null;
+
+        return Keys::where('ia_id', $ia->id)
+                   ->when($userId, fn($q) => $q->where('user_id', $userId))
+                   ->inRandomOrder()
+                   ->value('key');
     }
 }

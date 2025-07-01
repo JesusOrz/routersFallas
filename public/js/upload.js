@@ -16,7 +16,6 @@ $(document).ready(function () {
             return;
         }
 
-      
         let selectedTypes = [];
         let selectedDescriptions = [];
 
@@ -33,11 +32,22 @@ $(document).ready(function () {
             return;
         }
 
-       
+        const iaProvider = $("#provider_id").val();
+        const iaModel = $("#model_id").val();
+
+        if (!iaProvider || !iaModel) {
+            Swal.fire({
+                icon: "warning",
+                title: "Falta seleccionar proveedor o modelo de IA",
+            });
+            return;
+        }
+
+        formData.append("ia_provider", iaProvider);
+        formData.append("ia_model", iaModel);
         formData.append("analysis_types", JSON.stringify(selectedTypes));
         formData.append("analysis_descriptions", JSON.stringify(selectedDescriptions));
 
-       
         submitBtn.prop("disabled", true);
         resultado.html("");
         recomendacionesContainer.html("");
@@ -55,7 +65,7 @@ $(document).ready(function () {
             url: UPLOAD_LOG,
             type: "POST",
             headers: {
-                "X-CSRF-TOKEN": CSRF_TOKEN,
+                "X-CSRF-TOKEN": CSRF_TOKEN, 
             },
             data: formData,
             processData: false,

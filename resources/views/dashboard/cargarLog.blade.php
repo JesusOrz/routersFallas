@@ -20,20 +20,15 @@
                             <label for="logfile" class="form-label">Selecciona un archivo de logs (txt, log)</label>
 
                             <div class="border border-2 rounded-3 p-5 text-center position-relative bg-light"
-                                 id="dropzone"
-                                 style="cursor: pointer;">
+                                id="dropzone" style="cursor: pointer;">
                                 <i class="bi bi-upload fs-1 text-secondary" id="upload-icon"></i>
 
-                                <p class="mt-3 mb-0" id="dropzone-message">Arrastra y suelta el archivo aquí, o haz clic para seleccionarlo</p>
+                                <p class="mt-3 mb-0" id="dropzone-message">Arrastra y suelta el archivo aquí, o haz clic
+                                    para seleccionarlo</p>
                                 <p id="filename" class="text-muted mt-2"></p>
-                                <input 
-                                    type="file" 
-                                    name="logfile" 
-                                    id="logfile" 
-                                    class="form-control position-absolute top-0 start-0 w-100 h-100 opacity-0" 
-                                    accept=".txt,.log" 
-                                    required
-                                    style="cursor: pointer;">
+                                <input type="file" name="logfile" id="logfile"
+                                    class="form-control position-absolute top-0 start-0 w-100 h-100 opacity-0"
+                                    accept=".txt,.log" required style="cursor: pointer;">
                             </div>
                         </div>
                     </form>
@@ -60,6 +55,44 @@
         </div>
     </div>
 
+    <div class="row mb-3">
+
+        {{-- Card: Dropdown de IAs --}}
+        <div class="col-md-6">
+            <div class="card h-100">
+                <div class="card-header text-bg-secondary">
+                    Selección de Proveedor
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="provider_id" class="form-label">Proveedores disponibles</label>
+                        <select name="provider_id" id="provider_id" class="form-select">
+                            <option selected disabled>Cargando...</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- Card: Dropdown de IAs --}}
+        <div class="col-md-6">
+            <div class="card h-100">
+                <div class="card-header text-bg-secondary">
+                    Selección de Modelos
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="model_id" class="form-label">Modelos disponibles</label>
+                        <select name="model_id" id="model_id" class="form-select">
+                            <option selected disabled>Esperando proveedor...</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
     {{-- Botón fuera del formulario --}}
     <div class="d-grid d-md-flex justify-content-md-end mb-3">
         <button class="btn btn-dark" id="submitBtn">Analizar</button>
@@ -84,7 +117,7 @@
             </div>
         </div>
     </div>
-     {{-- Recomendaciones --}}
+    {{-- Recomendaciones --}}
     <div class="card">
         <div class="card-header text-bg-secondary">
             Recomendaciones
