@@ -6,6 +6,12 @@
 <div class="container py-4">
     <h1 class="mb-4">Cargar Archivo de Logs</h1>
 
+     {{-- Breadcrumb --}}
+    <x-breadcrumb :links="[
+        'Dashboard' => route('dashboard'),
+        'Cargar Archivo' => ''
+    ]" />
+
     <div class="row mb-3">
         {{-- Columna izquierda: Subida de archivo --}}
         <div class="col-md-6">

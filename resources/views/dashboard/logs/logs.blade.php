@@ -5,6 +5,12 @@
 <div class="container py-4">
     <h1 class="mb-4">Análisis de Logs</h1>
 
+     {{-- Breadcrumb --}}
+    <x-breadcrumb :links="[
+        'Dashboard' => route('dashboard'),
+        'Logs' => ''
+    ]" />
+
     {{-- Fila con dropdowns a la izquierda y logs a la derecha --}}
     <div class="row mb-4">
         {{-- Columna izquierda --}}

@@ -14,12 +14,12 @@ class LogController extends Controller
 {
     public function index()
     {
-        return view('dashboard.logs');
+        return view('dashboard.logs.logs');
     }
 
     public function cargarLogsView()
     {
-        return view('dashboard.cargarLog');
+        return view('dashboard.logs.cargarLog');
     }
 
     public function getLogs(Request $request)

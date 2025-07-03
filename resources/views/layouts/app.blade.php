@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.3.1/css/dataTables.dataTables.css" />
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="{{ asset('images/cart.png') }}">
+
 </head>
 
 <body class="sb-nav-fixed">

@@ -17,9 +17,18 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
-Route::get('/tables', [RouterController::class, 'index'])
+Route::get('/tables/routers', [RouterController::class, 'index'])
     ->middleware(['auth', 'verified'])
-    ->name('tables');
+    ->name('routersTable');
+
+Route::get('/tables/keys', [KeysController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('keysTable');
+
+
+Route::get('/tables/analysis', [AnalysisController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('analysisTable');
 
 Route::post('/routers/create', [RouterController::class, 'create'])
     ->middleware(['auth', 'verified'])

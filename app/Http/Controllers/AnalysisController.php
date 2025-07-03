@@ -7,6 +7,11 @@ use App\Models\Analysis;
 
 class AnalysisController extends Controller
 {
+
+    public function index()
+    {
+        return view('dashboard.tables.analysisTable');
+    }
     public function getAnalysisTypes()
     {
         $analysisTypes = Analysis::all()->map(function ($analysis) {

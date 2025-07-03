@@ -8,6 +8,13 @@ use App\Models\ArtificialIntelligence;
 
 class KeysController extends Controller
 {
+
+    public function index()
+    {
+        return view('dashboard.tables.keysTable');
+    }
+
+
     public function getKeys()
     {
         $keys = Keys::with('ia')->get()->map(function ($key) {
