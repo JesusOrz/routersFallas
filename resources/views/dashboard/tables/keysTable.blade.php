@@ -62,9 +62,10 @@
                     <thead class="table-dark">
                         <tr>
                             <th>ID</th>
-                            <th>Key (Encriptada)</th>
+                            <th>Key</th>
                             <th>Proveedor</th>
                             <th>Modelo</th>
+                            <th>Tipo</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>

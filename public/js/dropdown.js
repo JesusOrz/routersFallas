@@ -1,5 +1,4 @@
 $(document).ready(function () {
-    
     $.ajax({
         url: ROUTERS_JSON_URL,
         method: "GET",
@@ -26,40 +25,86 @@ $(document).ready(function () {
         },
     });
 
-let $providerSelect = $('#provider_id');
-let $modelSelect = $('#model_id');
+    let $providerSelect = $("#provider_id");
+    let $modelSelect = $("#model_id");
 
-$.ajax({
-    url: IA_JSON_URL,
-    method: 'GET',
-    success: function (response) {
-        const iaData = response.data;
+   $('#model_id').select2({
+    templateResult: function (data) {
+        if (!data.id) return data.text; 
 
-        const proveedoresUnicos = [...new Set(iaData.map(item => item.ia))];
+        const type = $(data.element).data('type');
+        const model = data.text.split(' (')[0];
 
-        $providerSelect.empty().append('<option selected disabled>Selecciona un proveedor</option>');
-        proveedoresUnicos.forEach(proveedor => {
-            $providerSelect.append(`<option value="${proveedor}">${proveedor}</option>`);
-        });
+        let typeLabel = '';
+        let colorClass = '';
 
-        $providerSelect.on('change', function () {
-            const proveedorSeleccionado = $(this).val();
-
-            const modelos = iaData
-                .filter(item => item.ia === proveedorSeleccionado)
-                .map(item => item.model);
-
-            $modelSelect.empty().append('<option selected disabled>Selecciona un modelo</option>');
-            modelos.forEach(modelo => {
-                $modelSelect.append(`<option value="${modelo}">${modelo}</option>`);
-            });
-        });
-    },
-    error: function () {
-        alert('Error al cargar proveedores y modelos.');
+        if (type === 'libre') {
+            colorClass = 'badge text-bg-success';
+            typeLabel = 'Libre';
+        } else if (type === 'pago') {
+            colorClass = 'badge text-bg-warning';
+            typeLabel = 'Pago';
+        } else if (type === 'libre (limitado)') {
+            colorClass = 'badge text-bg-primary';
+            typeLabel = 'Libre-Limitado';
+        }
+        return $(`
+            <span>
+                ${model} <span class="${colorClass}"> ${typeLabel}</span>
+            </span>
+        `);
     }
 });
 
+
+    $.ajax({
+        url: IA_JSON_URL,
+        method: "GET",
+        success: function (response) {
+            const iaData = response.data;
+
+            const proveedoresUnicos = [
+                ...new Set(iaData.map((item) => item.ia)),
+            ];
+
+            $providerSelect
+                .empty()
+                .append(
+                    "<option selected disabled>Selecciona un proveedor</option>"
+                );
+            proveedoresUnicos.forEach((proveedor) => {
+                $providerSelect.append(
+                    `<option value="${proveedor}">${proveedor}</option>`
+                );
+            });
+
+            $providerSelect.on("change", function () {
+                const proveedorSeleccionado = $(this).val();
+
+                const modelos = iaData.filter(
+                    (item) => item.ia === proveedorSeleccionado
+                );
+
+                $modelSelect
+                    .empty()
+                    .append(
+                        "<option selected disabled>Selecciona un modelo</option>"
+                    );
+
+                modelos.forEach(modelo => {
+    $modelSelect.append(
+        `<option value="${modelo.model}" data-type="${modelo.type}">
+            ${modelo.model} ${modelo.type}
+        </option>`
+    );
+});
+
+            });
+        },
+        error: function () {
+            alert("Error al cargar proveedores y modelos.");
+        },
+    });
 
     $.ajax({
         url: ANALYSIS_LIST_URL,

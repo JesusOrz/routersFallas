@@ -12,6 +12,7 @@ class ArtificialIntelligence extends Model
         'id',
         'ia',
         'model',
+        'type',
     ];
 
     public function ia()

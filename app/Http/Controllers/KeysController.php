@@ -19,12 +19,14 @@ class KeysController extends Controller
     {
         $keys = Keys::with('ia')->get()->map(function ($key) {
             return [
-                'id' => $key->id,
-                'key' => $key->key,
-                'ia_id' => $key->ia_id,
-                'user_id' => $key->user_id,
-                'ia_name' => $key->ia ? $key->ia->ia : 'IA no asignada',
-                'ia_model' => $key->ia ? $key->ia->model : 'Modelo no asignado',
+                'id'         => $key->id,
+                'key'        => $key->key,
+                'ia_id'      => $key->ia_id,
+                'user_id'    => $key->user_id,
+                'ia_name'    => $key->ia ? $key->ia->ia : 'IA no asignada',
+                'ia_model'   => $key->ia ? $key->ia->model : 'Modelo no asignado',
+                'type'       => $key->ia ? $key->ia->type : 'Tipo no asignado',
+                
             ];
         });
 

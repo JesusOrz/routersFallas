@@ -12,6 +12,7 @@ class Keys extends Model
         'key',
         'ia_id',
         'user_id',
+        
     ];
 
 

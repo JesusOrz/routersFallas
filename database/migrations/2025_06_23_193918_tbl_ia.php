@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('ia');
             $table->string('model');
+             $table->enum('type', ['libre', 'pago','libre (limitado)','no asignado'])->default('no asignado');
             $table->timestamps();
         });
     }

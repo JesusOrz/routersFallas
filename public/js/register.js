@@ -58,7 +58,21 @@ $(document).ready(function () {
         { data: "id" },
         { data: "key" },
         { data: "ia_name" }, 
-        { data: "ia_model" }, 
+        { data: "ia_model" },
+        {
+                data: "type",
+                render: function (data, type, row) {
+                    if (data === "libre") {
+                        return `<span class="badge text-bg-success">Libre</span>`;
+                    } else if (data === "pago") {
+                        return `<span class="badge text-bg-warning">Pago</span>`;
+                    } else if (data === "libre (limitado)") {
+                        return `<span class="badge text-bg-warning">Pago</span>`;
+                    } else {
+                        return `<span class="badge text-bg-danger">No asignado</span>`;
+                    }
+                },
+            },
         {
             data: null,
             render: function (data, type, row) {

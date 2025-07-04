@@ -13,6 +13,7 @@ class ArtificialIntelligenceController extends Controller
                 'id' => $ia->id,
                 'ia' => $ia->ia,
                 'model' =>$ia->model,
+                'type' =>$ia->type,
             ];
         });
 
