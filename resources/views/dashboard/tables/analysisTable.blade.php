@@ -53,7 +53,6 @@
                             <th>ID</th>
                             <th>Análisis</th>
                             <th>Descripción</th>
-                            <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>

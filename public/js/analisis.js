@@ -20,7 +20,6 @@ $(document).ready(function () {
             selectedAnalysisDescriptions.push(label);
         });
 
-        // Validaciones
         if (!logs) {
             Swal.fire({
                 icon: "warning",
@@ -65,26 +64,19 @@ $(document).ready(function () {
         });
 
         $.ajax({
-            url: ANALYZE_LOG, 
+            url: ANALYZE_LOG,
             method: "POST",
             headers: {
-                "X-CSRF-TOKEN": CSRF_TOKEN, 
+                "X-CSRF-TOKEN": CSRF_TOKEN,
             },
             data: {
                 logs: logs,
                 analysis_types: selectedAnalysis,
                 ia_provider: provider,
-                ia_model: model
+                ia_model: model,
             },
             success: function (response) {
                 Swal.close();
-
-                if (response.error) {
-                    resultado.html(
-                        `<div class="alert alert-danger">${response.error}</div>`
-                    );
-                    return;
-                }
 
                 if (Array.isArray(response.resultados)) {
                     let html = "";
@@ -107,48 +99,85 @@ $(document).ready(function () {
                         }
 
                         html += `
-                            <div class="alert ${colorClass}">
-                                <strong>Análisis: ${res.nombre} — Severidad: ${datos.severidad?.toUpperCase() || 'N/A'}</strong><br>
-                                <p><em>${res.descripcion}</em></p>
-                                <p>${datos.mensaje || 'Sin mensaje'}</p>
-                            </div>
-                        `;
+                    <div class="alert ${colorClass}">
+                        <strong>Análisis: ${res.nombre} — Severidad: ${
+                            datos.severidad?.toUpperCase() || "N/A"
+                        }</strong><br>
+                        <p><em>${res.descripcion}</em></p>
+                        <p>${datos.mensaje || "Sin mensaje"}</p>
+                    </div>
+                `;
 
-                        if (Array.isArray(datos.recomendaciones) && datos.recomendaciones.length > 0) {
+                        if (
+                            Array.isArray(datos.recomendaciones) &&
+                            datos.recomendaciones.length > 0
+                        ) {
                             recomendacionesHTML += `
-                                <div class="mb-3">
-                                    <div class="alert alert-success">
-                                        <strong>Recomendaciones para: ${res.nombre}</strong>
-                                        <ul>
-                                            ${datos.recomendaciones.map(rec => `<li>${rec}</li>`).join("")}
-                                        </ul>
-                                    </div>
-                                </div>
-                            `;
+                        <div class="mb-3">
+                            <div class="alert alert-success">
+                                <strong>Recomendaciones para: ${
+                                    res.nombre
+                                }</strong>
+                                <ul>
+                                    ${datos.recomendaciones
+                                        .map((rec) => `<li>${rec}</li>`)
+                                        .join("")}
+                                </ul>
+                            </div>
+                        </div>
+                    `;
                         } else {
                             recomendacionesHTML += `
-                                <div class="mb-3">
-                                    <div class="alert alert-secondary">
-                                        <strong>Recomendaciones para: ${res.nombre}</strong>
-                                        <p>No se encontraron recomendaciones.</p>
-                                    </div>
-                                </div>
-                            `;
+                        <div class="mb-3">
+                            <div class="alert alert-secondary">
+                                <strong>Recomendaciones para: ${res.nombre}</strong>
+                                <p>No se encontraron recomendaciones.</p>
+                            </div>
+                        </div>
+                    `;
                         }
                     });
 
-                    resultado.html(html);
-                    recomendaciones.html(recomendacionesHTML);
+                    $("#analisis-container").html(html);
+                    $("#recomendaciones-container").html(recomendacionesHTML);
+
+                    const resultsSection =
+                        document.getElementById("analisis-container");
+                    if (resultsSection) {
+                        resultsSection.scrollIntoView({ behavior: "smooth" });
+                    }
                 } else {
-                    resultado.html(`<div class="alert alert-info">No se devolvieron resultados.</div>`);
-                    recomendaciones.html("");
+                    $("#analisis-container").html(
+                        `<div class="alert alert-info">No se devolvieron resultados.</div>`
+                    );
+                    $("#recomendaciones-container").html("");
                 }
             },
             error: function (xhr, status, error) {
                 Swal.close();
-                resultado.html(
-                    `<div class="alert alert-danger">Error: ${xhr.responseText || error}</div>`
-                );
+
+                const response = xhr.responseJSON;
+
+                // Alerta SOLO si es error por clave o modelo no válido
+                if (
+                    response?.error?.includes("clave válida") ||
+                    response?.error?.includes("no está registrado")
+                ) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error de validación",
+                        text: response.error,
+                        confirmButtonColor: "#000000",
+                    });
+                } else {
+                    // Otros errores normales en el contenedor
+                    $("#analisis-container").html(
+                        `<div class="alert alert-danger">Error: ${
+                            response?.error || xhr.responseText || error
+                        }</div>`
+                    );
+                }
+
                 console.error(xhr);
             },
             complete: function () {

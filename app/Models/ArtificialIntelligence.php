@@ -19,4 +19,9 @@ class ArtificialIntelligence extends Model
     {
         return $this->belongsTo(ArtificialIntelligence::class, 'ia_id');
     }
+
+    public function keys() {
+    return $this->hasMany(Keys::class, 'ia_id');
+}
+
 }
