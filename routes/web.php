@@ -6,6 +6,7 @@ use App\Http\Controllers\KeysController;
 use App\Http\Controllers\RouterController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\AnalysisController;
+use App\Http\Controllers\ChatbotController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -68,6 +69,8 @@ Route::post('/logs/upload', [LogController::class, 'uploadLog'])->name('logs.upl
 
 
 Route::get('/tipo-analisis', [AnalysisController::class, 'getAnalysisTypes']);
+
+Route::post('/chatbot', [ChatbotController::class, 'handle']);
 
 
 

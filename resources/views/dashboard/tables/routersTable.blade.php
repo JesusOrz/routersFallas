@@ -114,7 +114,7 @@
     <!-- Alineación del botón a la derecha -->
     <div class="mb-3 text-end">
         <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#modalConnect">
-            Nuevo Router
+            Agregar Router
         </button>
     </div>
 </div>

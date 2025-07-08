@@ -66,7 +66,6 @@
                             <th>Proveedor</th>
                             <th>Modelo</th>
                             <th>Tipo</th>
-                            <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>

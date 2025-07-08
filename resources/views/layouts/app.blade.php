@@ -9,11 +9,11 @@
     <meta name="author" content="" />
     <title>@yield('title', 'Detección de Fallas')</title>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
-    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.3.1/css/dataTables.dataTables.css" />
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/chat.css') }}" rel="stylesheet" />
     <link rel="icon" type="image/png" href="{{ asset('images/cart.png') }}">
 
 </head>
@@ -34,7 +34,38 @@
             @include('partials.footer')
         </div>
     </div>
+
+
+
+
+
+
+    <!-- Contenedor flotante del chatbot-->
+    <div id="chatbot-toggle" onclick="toggleChatbot()"><i class="bi bi-question-circle-fill"></i></div>
+
+    <div id="chatbot-container" class="hidden">
+        <div id="chat-header">
+            <i class="fas fa-robot"></i> Asistente Virtual
+            <span onclick="toggleChatbot()" class="close-btn">&times;</span>
+        </div>
+        <div id="chat-window">
+            <em>Sugerencias: "api key", "formato de log", "contacto", "registrar router"</em>
+        </div>
+        <form id="chat-form">
+            <div id="chat-input-area">
+                <input type="text" id="user-input" placeholder="Escribe tu pregunta..." />
+                <button type="submit">Enviar</button>
+            </div>
+        </form>
+    </div>
+
+
+
+
+
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
@@ -49,7 +80,8 @@
     <script src="{{ asset('js/dropdown.js') }}"></script>
     <script src="{{ asset('js/analisis.js') }}"></script>
     <script src="{{ asset('js/upload.js') }}"></script>
-    
+    <script src="{{ asset('js/chat.js') }}"></script>
+
     <script>
     const CSRF_TOKEN = "{{ csrf_token() }}";
     const USER_ID = "{{ Auth::user()->id ?? 'ID' }}";
@@ -64,8 +96,10 @@
     const UPLOAD_LOG = "{{ route('logs.upload') }}"
     const ANALYZE_LOG = "{{ route('logs.analizar') }}"
     const ANALYSIS_LIST_URL = "{{ url('/tipo-analisis') }}";
-
+    const CHATBOT_RESPONSE = "{{ url('/chatbot') }}";
     </script>
+
+
 
 
 </body>
