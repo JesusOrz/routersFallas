@@ -30,21 +30,24 @@ li {
 
 /* Layout principal */
 .wrapper {
-    align-items: stretch;
     display: flex;
     width: 100%;
+    align-items: stretch;
 }
 
 /* ========== SIDEBAR ========== */
 #sidebar {
-    max-width: 264px;
-    min-width: 264px;
-    transition: all 0.35s ease-in-out;
-    box-shadow: 0 0 35px 0 rgba(49, 57, 66, 0.5);
-    z-index: 1111;
-    
+    width: 264px;
+    height: 100vh;
     background-color: #061B29;
     color: #ffffff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1111;
+    transition: all 0.35s ease-in-out;
+    overflow-y: auto;
+    box-shadow: 0 0 35px 0 rgba(49, 57, 66, 0.5);
 }
 
 #sidebar.collapsed {
@@ -104,7 +107,6 @@ a.sidebar-link:hover {
 
 .sidebar-link[data-bs-toggle="collapse"].collapsed::after {
     transform: rotate(45deg);
-    transition: all .2s ease-out;
 }
 
 /* Submenús */
@@ -117,23 +119,52 @@ a.sidebar-link:hover {
     color: #ffc107;
 }
 
+/* ========== NAVBAR ========== */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 264px;
+    right: 0;
+    height: 56px;
+    background-color: #ffffff;
+    z-index: 1200;
+    transition: left 0.35s ease-in-out;
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Navbar cuando sidebar está colapsado */
+#sidebar.collapsed ~ .main .navbar {
+    left: 0;
+}
+
 /* ========== MAIN ========== */
 .main {
+    margin-left: 264px;
+    margin-top: 56px;
+    transition: margin-left 0.35s ease-in-out;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
     width: 100%;
-    overflow: hidden;
-    transition: all 0.35s ease-in-out;
 }
 
+/* Main cuando sidebar está colapsado */
+#sidebar.collapsed ~ .main {
+    margin-left: 0;
+}
+
+/* Contenido con scroll si se desborda */
 .content {
     flex: 1;
-    max-width: 100vw;
-    width: 100vw;
+    padding: 1rem;
+    overflow-y: auto;
+    max-height: calc(100vh - 56px); /* Resta altura del navbar */
 }
 
-/* ========== NAVBAR ========== */
+/* ========== NAVBAR BRAND ========== */
 .navbar-brand img {
     height: 40px;
 }
@@ -150,17 +181,24 @@ footer {
     font-size: 0.85rem;
     color: #6b7280;
     border-top: 1px solid #e2e8f0;
+    margin-top: auto;
 }
 
 /* ========== RESPONSIVE ========== */
-@media (min-width: 768px) {
-    .content {
-        width: auto;
+@media (max-width: 768px) {
+    .navbar {
+        left: 0 !important;
+    }
+
+    .main {
+        margin-left: 0 !important;
+    }
+
+    #sidebar {
+        margin-left: -264px;
+    }
+
+    #sidebar.collapsed {
+        margin-left: 0;
     }
 }
-
-
-
-
-
-
