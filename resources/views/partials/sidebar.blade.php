@@ -1,50 +1,48 @@
-<div id="layoutSidenav_nav">
-    <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-        <div class="sb-sidenav-menu">
-            <div class="nav">
-                <div class="sb-sidenav-menu-heading">Core</div>
-                <a class="nav-link" href="{{ route('dashboard') }}">
-                    <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+<aside id="sidebar">
+    <div class="h-100">
+        <div class="sidebar-logo">
+            <h3 class="sidebar-item">Bienvenido {{ Auth::user()->name ?? 'Usuario' }} !!</h3>
+        </div>
+
+        <ul class="sidebar-nav">
+            <li class="sidebar-header">CORE</li>
+
+            <li class="sidebar-item">
+                <a href="{{ route('dashboard') }}" title="Dashboard" class="sidebar-link">
+                    <i class="bi bi-speedometer"></i> 
                     Dashboard
                 </a>
-                <div class="sb-sidenav-menu-heading">Addons</div>
+            </li>
 
-                <a class="nav-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseLayoutsTables" aria-expanded="false" aria-controls="collapseLayoutsTables">
-                                <div class="sb-nav-link-icon"><i class="bi bi-table"></i></div>
-                                Tables
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
+            <li class="sidebar-header">TOOLS</li>
 
-                <div class="collapse" id="collapseLayoutsTables" aria-labelledby="headingOne"
-                    data-bs-parent="#sidenavAccordion">
-                    <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link" href="{{ route('keysTable') }}">Mis Keys</a>
-                        <a class="nav-link" href="{{ route('routersTable') }}">Mis Routers</a>
-                        <a class="nav-link" href="{{ route('analysisTable') }}">Tipos de Analisis</a>
-                    </nav>
-                </div>
+            <li class="sidebar-item">
+                <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#registros"
+                    aria-expanded="false" aria-controls="registros">
+                    <i class="fa-regular fa-file-lines pe-2"></i>
+                    Registros
+                </a>
+                <ul id="registros" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                    <li class="sidebar-item"><a href="{{ route('keysTable') }}" class="sidebar-link">Mis Keys</a></li>
+                    <li class="sidebar-item"><a href="{{ route('routersTable') }}" class="sidebar-link">Mis Routers</a></li>
+                    <li class="sidebar-item"><a href="{{ route('analysisTable') }}" class="sidebar-link">Tipos de Analisís</a></li>
+                </ul>
+            </li>
 
+            <li class="sidebar-item">
+                <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#auth"
+                    aria-expanded="false" aria-controls="auth">
+                    <i class="fa-solid fa-magnifying-glass-chart"></i>
+                    Analisís
+                </a>
+                <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                    <li class="sidebar-item"><a href="{{ route('logs') }}" class="sidebar-link">Analizar Log</a></li>
+                    <li class="sidebar-item"><a href="{{ route('cargar-logs') }}" class="sidebar-link">Cargar Archivo</a></li>
+                </ul>
+            </li>
 
-                <a class="nav-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"><i class="bi bi-clipboard2-pulse-fill"></i></div>
-                                Logs
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
+            
+        </ul>
+    </div>
+</aside>
 
-                <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
-                    data-bs-parent="#sidenavAccordion">
-                    <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link" href="{{ route('logs') }}">Analizar logs</a>
-                        <a class="nav-link" href="{{ route('cargar-logs') }}">Cargar archivo</a>
-                    </nav>
-                </div>
-
-
-            </div>
-        </div>
-        <div class="sb-sidenav-footer">
-            <div class="small">Logged in as:</div>
-            {{ Auth::user()->name ?? 'Usuario' }}
-        </div>
-    </nav>
-</div>

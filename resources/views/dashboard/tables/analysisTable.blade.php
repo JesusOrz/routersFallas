@@ -32,16 +32,16 @@
         </div>
     </div>
 
-    <h1 class="mt-4 mb-3">Análisis</h1>
+    <h1 class="mt-4 mb-3">Tipos de Análisis</h1>
 
     {{-- Breadcrumb --}}
     <x-breadcrumb :links="[
         'Dashboard' => route('dashboard'),
-        'Tipo de Analisis' => ''
+        'Tipos de Análisis' => ''
     ]" />
 
     {{-- Tabla de Análisis en Card --}}
-    <div class="card">
+    <div class="card mb-3">
         <div class="card-header bg-dark text-white">
             Tipos de Análisis
         </div>
@@ -65,9 +65,10 @@
     </div>
     <!-- Alineación del botón a la derecha -->
     <div class="mb-3 text-end">
-        <button type="button" class="btn btn-dark" data-bs-toggle="modal" title="Agregar opción"
+        <button type="button" class="btn btn-dark" data-bs-toggle="modal" title="Agregar analisís"
             data-bs-target="#modalAnalysis">
-            Nueva Opcion
+            <i class="fa-solid fa-plus"></i>
+            Agregar Analisís
         </button>
     </div>
 </div>

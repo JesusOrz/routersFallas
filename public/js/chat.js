@@ -33,5 +33,13 @@ function appendMessage(sender, text) {
 }
 
 function toggleChatbot() {
-    document.getElementById('chatbot-container').classList.toggle('hidden');
+    const container = document.getElementById('chatbot-container');
+    const input = document.getElementById('user-input');
+
+    container.classList.toggle('hidden');
+
+    // Si se muestra el chatbot, enfoca el input
+    if (!container.classList.contains('hidden')) {
+        setTimeout(() => input.focus(), 100);
+    }
 }

@@ -88,7 +88,7 @@
     {{-- Tabla de Routers en Card --}}
     <div class="card mb-5">
         <div class="card-header bg-dark text-white">
-            Lista de Routers
+            Mis Routers
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -114,6 +114,7 @@
     <!-- Alineación del botón a la derecha -->
     <div class="mb-3 text-end">
         <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#modalConnect">
+            <i class="fa-solid fa-plus"></i>
             Agregar Router
         </button>
     </div>

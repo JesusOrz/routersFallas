@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Tabla de Keys')
+@section('title', 'Mis Keys')
 
 @section('content')
 <div class="container py-4">
@@ -79,6 +79,7 @@
     <!-- Botón alineado a la derecha -->
     <div class="mb-3 text-end">
         <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#modalKeys">
+            <i class="fa-solid fa-plus"></i>
             Agregar API key
         </button>
     </div>
