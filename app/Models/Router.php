@@ -14,5 +14,6 @@ class Router extends Model
         'password',
         'state',
         'port',
+        'userSystem_id',
     ];
 }

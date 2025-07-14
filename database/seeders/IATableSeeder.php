@@ -16,7 +16,8 @@ class IATableSeeder extends Seeder
         $now = Carbon::now();
         $ias = [
             // 🔗 OpenRouter
-           ['ia' => 'openrouter', 'model' => 'openai/gpt-4o', 'type' => 'pago', 'created_at' => $now, 'updated_at' => $now],
+            ['ia' => 'openrouter', 'model' => 'openai/gpt-4o', 'type' => 'pago', 'created_at' => $now, 'updated_at' => $now],
+            ['ia' => 'openrouter', 'model' => 'openai/gpt-4.1-nano', 'type' => 'libre', 'created_at' => $now, 'updated_at' => $now],
             ['ia' => 'openrouter', 'model' => 'openai/gpt-4-turbo', 'type' => 'pago', 'created_at' => $now, 'updated_at' => $now],
             ['ia' => 'openrouter', 'model' => 'openai/gpt-3.5-turbo', 'type' => 'libre (limitado)', 'created_at' => $now, 'updated_at' => $now],
             ['ia' => 'openrouter', 'model' => 'anthropic/claude-3-opus', 'type' => 'pago', 'created_at' => $now, 'updated_at' => $now],

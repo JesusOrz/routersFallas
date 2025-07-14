@@ -91,7 +91,7 @@
 
     <script>
     const CSRF_TOKEN = "{{ csrf_token() }}";
-    const USER_ID = "{{ Auth::user()->id ?? 'ID' }}";
+    const USER_ID = "{{ Auth::user()->id ?? 'null' }}";
     const IA_JSON_URL = "{{ route('ia.json') }}";
     const KEYS_JSON_URL = "{{ route('keys.json') }}";
     const ROUTERS_JSON_URL = "{{ route('routers.json') }}";

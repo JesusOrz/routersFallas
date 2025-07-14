@@ -16,19 +16,22 @@ class RouterController extends Controller
 
 
     public function getRouters()
-    {
-        $routers = Router::all()->map(function ($router) {
-            return [
-                'id' => $router->id,
-                'host' => $router->host,
-                'user' => $router->user,
-                'state' => $router->state ?? 'inactivo',
-                'port' => $router->port ?? 8728,
-            ];
-        });
+{
+    $userId = auth()->id();
 
-        return response()->json(['data' => $routers]);
-    }
+    $routers = Router::where('userSystem_id', $userId)->get()->map(function ($router) {
+        return [
+            'id' => $router->id,
+            'host' => $router->host,
+            'user' => $router->user,
+            'state' => $router->state ?? 'inactivo',
+            'port' => $router->port ?? 8728,
+        ];
+    });
+
+    return response()->json(['data' => $routers]);
+}
+
     public function create(Request $request)
     {
         $validated = $request->validate([
@@ -36,6 +39,7 @@ class RouterController extends Controller
             'user' => 'required|string',
             'password' => 'required|string',
             'port' => 'required|integer',
+            'userSystem_id'=>'required|integer',
         ]);
 
         $router = Router::create($validated);

@@ -54,7 +54,7 @@
                 <div class="card-body">
                     <div class="mb-3">
                         <label for="model_id" class="form-label">Modelos disponibles</label>
-                        <select name="model_id" id="model_id" class="form-select">
+                        <select name="model_id" id="model_id" class="form-control select2">
                             <option selected disabled>Esperando proveedor...</option>
                         </select>
                     </div>

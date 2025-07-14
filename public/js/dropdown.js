@@ -56,6 +56,39 @@ $(document).ready(function () {
     }
 });
 
+$('#modalKeys').on('shown.bs.modal', function () {
+    $('#model_id').select2({
+        dropdownParent: $('#modalKeys'),
+        templateResult: function (data) {
+            if (!data.id) return data.text;
+
+            const type = $(data.element).data('type');
+            const model = data.text.split(' (')[0];
+
+            let typeLabel = '';
+            let colorClass = '';
+
+            if (type === 'libre') {
+                colorClass = 'badge text-bg-success';
+                typeLabel = 'Libre';
+            } else if (type === 'pago') {
+                colorClass = 'badge text-bg-warning';
+                typeLabel = 'Pago';
+            } else if (type === 'libre (limitado)') {
+                colorClass = 'badge text-bg-primary';
+                typeLabel = 'Libre-Limitado';
+            }
+
+            return $(`
+                <span>
+                    ${model} <span class="${colorClass}">${typeLabel}</span>
+                </span>
+            `);
+        }
+    });
+});
+
+
 
     $.ajax({
         url: IA_JSON_URL,
@@ -94,7 +127,7 @@ $(document).ready(function () {
                 modelos.forEach(modelo => {
     $modelSelect.append(
         `<option value="${modelo.model}" data-type="${modelo.type}">
-            ${modelo.model} ${modelo.type}
+            ${modelo.model}
         </option>`
     );
 });

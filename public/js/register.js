@@ -4,7 +4,7 @@ $(document).ready(function () {
     let table = $("#routers-table").DataTable({
         ajax: ROUTERS_JSON_URL,
         columns: [
-            { data: "id" },
+
             { data: "host" },
             { data: "user" },
             {
@@ -45,7 +45,7 @@ $(document).ready(function () {
     let tableKeys = $("#keys-table").DataTable({
     ajax: KEYS_JSON_URL,
     columns: [
-        { data: "id" },
+
         { data: "key" },
         { data: "ia_name" }, 
         { data: "ia_model" },
@@ -163,6 +163,7 @@ $(document).ready(function () {
                 user: user,
                 password: pass,
                 port: port,
+                userSystem_id: USER_ID,
             },
             success: function (response) {
                 if (response.success) {

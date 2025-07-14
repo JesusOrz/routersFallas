@@ -95,7 +95,6 @@
                 <table id="routers-table" class="table table-striped table-hover">
                     <thead class="table-dark">
                         <tr>
-                            <th>ID</th>
                             <th>Host</th>
                             <th>Usuario</th>
                             <th>Estado</th>

@@ -33,7 +33,7 @@ Devuelve únicamente un JSON válido en este formato, sin explicaciones ni texto
 EOT;
 
         switch ($provider) {
-            case 'OpenRouter':
+            case 'Openrouter':
                 $url = 'https://openrouter.ai/api/v1/chat/completions';
                 $response = Http::withHeaders([
                     'Authorization' => 'Bearer ' . $apiKey,

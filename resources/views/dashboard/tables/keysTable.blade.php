@@ -61,7 +61,6 @@
                 <table id="keys-table" class="table table-striped table-hover">
                     <thead class="table-dark">
                         <tr>
-                            <th>ID</th>
                             <th>Key</th>
                             <th>Proveedor</th>
                             <th>Modelo</th>
