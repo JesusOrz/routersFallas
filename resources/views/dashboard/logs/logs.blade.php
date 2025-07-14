@@ -5,7 +5,7 @@
 <div class="container py-4">
     <h1 class="mb-4">Análisis de Logs</h1>
 
-     {{-- Breadcrumb --}}
+    {{-- Breadcrumb --}}
     <x-breadcrumb :links="[
         'Dashboard' => route('dashboard'),
         'Logs' => ''
@@ -38,11 +38,11 @@
                 </div>
                 <div class="card-body">
                     <div class="mb-3">
-                            <label for="provider_id" class="form-label">Proveedores disponibles</label>
-                            <select name="provider_id" id="provider_id" class="form-select">
-                                <option selected disabled>Cargando...</option>
-                            </select>
-                        </div>
+                        <label for="provider_id" class="form-label">Proveedores disponibles</label>
+                        <select name="provider_id" id="provider_id" class="form-select">
+                            <option selected disabled>Cargando...</option>
+                        </select>
+                    </div>
                 </div>
             </div>
 
@@ -53,11 +53,11 @@
                 </div>
                 <div class="card-body">
                     <div class="mb-3">
-                            <label for="model_id" class="form-label">Modelos disponibles</label>
-                            <select name="model_id" id="model_id" class="form-select">
-                                <option selected disabled>Esperando proveedor...</option>
-                            </select>
-                        </div>
+                        <label for="model_id" class="form-label">Modelos disponibles</label>
+                        <select name="model_id" id="model_id" class="form-select">
+                            <option selected disabled>Esperando proveedor...</option>
+                        </select>
+                    </div>
                 </div>
             </div>
 
@@ -117,7 +117,7 @@
     </div>
 
     {{-- Recomendaciones --}}
-    <div class="card">
+    <div class="card mb-3">
         <div class="card-header text-bg-secondary">
             Recomendaciones
         </div>
@@ -126,6 +126,16 @@
                 <!-- El resultado del análisis aparecerá aquí -->
             </div>
         </div>
+    </div>
+
+    {{-- Boton para descargar PDF --}}
+
+    <div class="text-end">
+        <button id="descargar-pdf" class="btn btn-primary mt-3" style="display:none;">
+            <i class="bi bi-file-earmark-arrow-down"></i>
+            Descargar análisis en PDF
+        </button>
+
     </div>
 
 </div>

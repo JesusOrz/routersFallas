@@ -192,17 +192,30 @@ public function uploadLog(Request $request)
 
         $results = [];
 
-        foreach ($analysisTypes as $index => $typeId) {
-            $description = $analysisDescriptions[$index] ?? 'Sin descripción';
+        foreach ($analysisTypes as $id) {
+            $analisis = Analysis::find($id);
+            if (!$analisis)
+                continue;
 
             $response = IAService::analizarConIA(
                 $provider,
                 $model,
                 $fileContent,
-                $typeId,
-                $description,
+                $analisis->analysis,
+                $analisis->description,
                 auth()->id()
             );
+
+
+
+
+
+
+
+
+
+
+
 
             $content = match ($provider) {
                 'Gemini' => $response['candidates'][0]['content']['parts'][0]['text'] ?? null,
@@ -226,8 +239,8 @@ public function uploadLog(Request $request)
 
             if (json_last_error() !== JSON_ERROR_NONE) {
                 $results[] = [
-                    'type' => $typeId,
-                    'description' => $description,
+                    'type' => $analisis->analysis,
+                    'description' => $analisis->description,
                     'resultado' => [
                         'severidad' => 'media',
                         'mensaje' => 'Respuesta con formato inválido.',
@@ -239,8 +252,8 @@ public function uploadLog(Request $request)
             }
 
             $results[] = [
-                'type' => $typeId,
-                'description' => $description,
+                'type' => $analisis->analysis,
+                'description' => $analisis->description,
                 'resultado' => $decoded,
             ];
         }

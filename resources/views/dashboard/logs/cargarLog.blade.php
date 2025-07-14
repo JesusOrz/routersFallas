@@ -124,7 +124,7 @@
         </div>
     </div>
     {{-- Recomendaciones --}}
-    <div class="card">
+    <div class="card mb-3">
         <div class="card-header text-bg-secondary">
             Recomendaciones
         </div>
@@ -134,6 +134,19 @@
             </div>
         </div>
     </div>
+
+        {{-- Boton para descargar PDF --}}
+
+    <div class="text-end">
+        <button id="descargarpdf" class="btn btn-primary mt-3" style="display:none;">
+            <i class="bi bi-file-earmark-arrow-down"></i>
+            Descargar análisis en PDF
+        </button>
+
+    </div>
+
+    
+
 </div>
 
 <script src="{{ asset('js/file.js') }}"></script>
