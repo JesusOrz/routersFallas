@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('password');
             $table->integer('port')->default(8728);
             $table->enum('state', ['activo', 'inactivo'])->default('activo');
+            $table->foreignId('userSystem_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

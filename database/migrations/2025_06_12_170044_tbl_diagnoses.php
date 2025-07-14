@@ -17,7 +17,6 @@ return new class extends Migration
             $table->foreignId('analysis_type_id')->constrained('analysis_types');
             $table->text('description');
             $table->enum('severity_level', ['low', 'medium', 'high', 'critical'])->default('low');
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->dateTime('diagnosis_time')->useCurrent();
             $table->timestamps();
         });
