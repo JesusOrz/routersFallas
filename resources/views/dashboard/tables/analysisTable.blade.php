@@ -45,9 +45,9 @@
         <div class="card-header bg-dark text-white">
             Tipos de Análisis
         </div>
-        <div class="card-body mb-5">
+        <div class="card-body p-0">
             <div class="table-responsive">
-                <table id="analysis-table" class="table table-striped table-hover">
+                <table id="analysis-table" class="table table-striped table-hover mb-0">
                     <thead class="table-dark">
                         <tr>
                             <th>ID</th>

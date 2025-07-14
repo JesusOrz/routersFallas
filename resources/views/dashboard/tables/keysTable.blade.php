@@ -41,8 +41,6 @@
         </div>
     </div>
 
-    
-
     <h1 class="mt-4 mb-3">Keys</h1>
 
     {{-- Breadcrumb --}}
@@ -53,12 +51,13 @@
 
     {{-- Tabla de keys en Card --}}
     <div class="card mb-5">
-        <div class="card-header bg-dark text-white">
-            Mis API keys
+                <div class="card-header bg-dark text-white">
+            Mis Keys
         </div>
-        <div class="card-body">
+
+        <div class="card-body p-0">
             <div class="table-responsive">
-                <table id="keys-table" class="table table-striped table-hover">
+                <table id="keys-table" class="table table-striped table-hover mb-0">
                     <thead class="table-dark">
                         <tr>
                             <th>Key</th>
@@ -68,14 +67,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {{-- Aquí se llenará dinámicamente --}}
+                        {{-- Se llena dinámicamente vía DataTables --}}
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 
-    <!-- Botón alineado a la derecha -->
+    {{-- Botón Agregar --}}
     <div class="mb-3 text-end">
         <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#modalKeys">
             <i class="fa-solid fa-plus"></i>

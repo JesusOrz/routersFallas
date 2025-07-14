@@ -90,9 +90,9 @@
         <div class="card-header bg-dark text-white">
             Mis Routers
         </div>
-        <div class="card-body">
+        <div class="card-body p-0">
             <div class="table-responsive">
-                <table id="routers-table" class="table table-striped table-hover">
+                <table id="routers-table" class="table table-striped table-hover mb-0">
                     <thead class="table-dark">
                         <tr>
                             <th>Host</th>
