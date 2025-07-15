@@ -91,6 +91,7 @@
     <script src="{{ asset('js/analisis.js') }}"></script>
     <script src="{{ asset('js/upload.js') }}"></script>
     <script src="{{ asset('js/chat.js') }}"></script>
+    <script src="{{ asset('js/stats.js') }}"></script>
 
     <script>
     const CSRF_TOKEN = "{{ csrf_token() }}";
@@ -107,6 +108,8 @@
     const ANALYZE_LOG = "{{ route('logs.analizar') }}"
     const ANALYSIS_LIST_URL = "{{ url('/tipo-analisis') }}";
     const CHATBOT_RESPONSE = "{{ url('/chatbot') }}";
+
+    const STATS_SYSTEM ="{{ url('/dashboard/stats') }}";
     </script>
 
 </body>

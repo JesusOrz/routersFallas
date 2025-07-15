@@ -20,4 +20,10 @@ class Keys extends Model
     {
         return $this->belongsTo(ArtificialIntelligence::class, 'ia_id');
     }
+
+    public function user()
+{
+    return $this->belongsTo(User::class, 'user_id');
+}
+
 }

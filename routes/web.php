@@ -71,6 +71,8 @@ Route::post('/logs/upload', [LogController::class, 'uploadLog'])->name('logs.upl
 Route::get('/tipo-analisis', [AnalysisController::class, 'getAnalysisTypes']);
 
 Route::post('/chatbot', [ChatbotController::class, 'handle']);
+Route::get('/dashboard/stats', [DashboardController::class, 'getStats'])->middleware('auth');
+
 
 
 
