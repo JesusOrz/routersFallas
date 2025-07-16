@@ -55,6 +55,60 @@
         </form>
     </div>
 
+    <!-- Contenedor de Toasts -->
+<div class="position-fixed top-0 end-0 p-3" style="z-index: 1500">
+  {{-- Toast de éxito --}}
+  <div id="toastSuccess" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body" id="toastSuccessMessage">
+        Operación realizada con éxito.
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Cerrar"></button>
+    </div>
+  </div>
+
+  {{-- Toast de error --}}
+  <div id="toastError" class="toast align-items-center text-bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body" id="toastErrorMessage">
+        Ocurrió un error inesperado.
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Cerrar"></button>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+    <!-- Modal de Sugerencias -->
+<div class="modal fade" id="sugerenciaModal" tabindex="-1" aria-labelledby="sugerenciaModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form id="formSugerencia" method="POST" action="{{ route('sugerencias.enviar') }}">
+        @csrf
+        <div class="modal-header">
+          <h5 class="modal-title" id="sugerenciaModalLabel">Enviar sugerencia</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <div id="alertaSugerencia"></div>
+
+          <div class="mb-3">
+            <label for="mensaje" class="form-label">¿Qué sugerencia deseas enviar?</label>
+            <textarea name="mensaje" id="mensaje" class="form-control" rows="4" required placeholder="Escribe tu sugerencia aquí..."></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="btnCancelar" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button id="btnEnviar" type="submit" class="btn btn-primary">Enviar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 
 
 
@@ -92,6 +146,7 @@
     <script src="{{ asset('js/upload.js') }}"></script>
     <script src="{{ asset('js/chat.js') }}"></script>
     <script src="{{ asset('js/stats.js') }}"></script>
+    <script src="{{ asset('js/sugerencias-email.js') }}"></script>
 
     <script>
     const CSRF_TOKEN = "{{ csrf_token() }}";

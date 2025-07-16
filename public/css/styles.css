@@ -55,7 +55,8 @@ li {
 }
 
 .sidebar-logo {
-    padding: 1.15rem 1.5rem;
+    padding: 0.7rem 1.5rem;
+    color: #ffc107;
 }
 
 .sidebar-logo a {
@@ -210,3 +211,14 @@ footer {
 .modal-backdrop {
     z-index: 1290 !important;
 }
+.swal2-container {
+    z-index: 1400 !important;
+}
+
+
+.sidebar-link.active {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ffc107 !important;
+    font-weight: bold;
+}
+

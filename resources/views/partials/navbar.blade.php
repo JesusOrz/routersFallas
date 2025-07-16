@@ -1,3 +1,6 @@
+
+
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light px-3 border-bottom">
     <div class="d-flex align-items-center">
         <!-- Botón del menú (sidebar toggle) -->
@@ -21,6 +24,19 @@
                 {{ Auth::user()->name ?? 'Usuario' }}
             </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+
+
+                
+
+                <!-- Opción de sugerencias -->
+                <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#sugerenciaModal">
+                    <i class="bi bi-chat-dots-fill me-2"></i>Sugerencias
+                </a>
+
+
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
                 <!-- Opción de Ayuda -->
                 <li>
                     <a class="dropdown-item" href="#" onclick="toggleChatbot(); return false;">
@@ -28,7 +44,9 @@
                     </a>
                 </li>
 
-                <li><hr class="dropdown-divider"></li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
 
                 <!-- Logout -->
                 <li>
@@ -43,3 +61,4 @@
         </li>
     </ul>
 </nav>
+

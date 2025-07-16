@@ -72,6 +72,7 @@ Route::get('/tipo-analisis', [AnalysisController::class, 'getAnalysisTypes']);
 
 Route::post('/chatbot', [ChatbotController::class, 'handle']);
 Route::get('/dashboard/stats', [DashboardController::class, 'getStats'])->middleware('auth');
+Route::post('/sugerencia/enviar', [ChatbotController::class, 'enviarSugerencia'])->name('sugerencias.enviar')->middleware('auth');
 
 
 

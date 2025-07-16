@@ -78,44 +78,6 @@ let tableKeys = $("#keys-table").DataTable({
     ...commonOptions,
 });
 
-
-    $("#createIA").click(function () {
-        const ia = $("#iaName").val();
-        const model = $("#modelIA").val();
-
-        $.ajax({
-            url: IA_STORE_URL,
-            method: "POST",
-            data: {
-                _token: CSRF_TOKEN,
-                ia: ia,
-                model: model,
-            },
-            success: function (response) {
-                if (response.success) {
-                    Swal.fire({
-                        position: "top-end",
-                        icon: "success",
-                        title: "Registro agregado correctamente",
-                        showConfirmButton: false,
-                        timer: 1500,
-                    });
-                    cargarDropdownIAs();
-                    $("#iaName, #modelIA").val("");
-                    $("#modalNewIa").modal("hide");
-                }
-            },
-            error: function (xhr) {
-                const errors = xhr.responseJSON.errors;
-                let msg = "";
-                for (let field in errors) {
-                    msg += errors[field][0] + "\n";
-                }
-                alert(msg);
-            },
-        });
-    });
-
     $("#btnCreateKey").click(function () {
         const key = $("#key").val();
         const proveedor = $("#provider_id").val();
@@ -133,13 +95,8 @@ let tableKeys = $("#keys-table").DataTable({
             },
             success: function (response) {
                 if (response.success) {
-                    Swal.fire({
-                        position: "top-end",
-                        icon: "success",
-                        title: "Registro agregado correctamente",
-                        showConfirmButton: false,
-                        timer: 1500,
-                    });
+
+                    showToast('success','Registro agregado correctamente',3000);
                     tableKeys.ajax.reload();
                     $("#key, #provider_id, #model_id").val("");
                     $("#modalKeys").modal("hide");
@@ -151,7 +108,7 @@ let tableKeys = $("#keys-table").DataTable({
                 for (let field in errors) {
                     msg = errors[field][0];
                 }
-                alert(msg);
+                showToast('error',msg,3000);
                 $("#key, #provider_id, #model_id").val("");
             },
         });
@@ -176,13 +133,8 @@ let tableKeys = $("#keys-table").DataTable({
             },
             success: function (response) {
                 if (response.success) {
-                    Swal.fire({
-                        position: "top-end",
-                        icon: "success",
-                        title: "Router has been saved",
-                        showConfirmButton: false,
-                        timer: 1500,
-                    });
+                    showToast('success', 'Router agregado correctamente',3000);
+
                     table.ajax.reload();
                     $("#host, #user, #pass").val("");
                     $("#port").val("8728");
@@ -195,7 +147,7 @@ let tableKeys = $("#keys-table").DataTable({
                 for (let field in errors) {
                     msg += errors[field][0] + "\n";
                 }
-                alert(msg);
+                showToast('error',msg,3000);
             },
         });
     });
@@ -232,13 +184,9 @@ let tableKeys = $("#keys-table").DataTable({
             },
             success: function (response) {
                 if (response.success) {
-                    Swal.fire({
-                        position: "top-end",
-                        icon: "success",
-                        title: "Router actualizado correctamente",
-                        showConfirmButton: false,
-                        timer: 1500,
-                    });
+
+                    showToast('success','Router actualizado correctamente',3000);
+
                     $("#modalEditRouter").modal("hide");
                     table.ajax.reload();
                 }
@@ -249,7 +197,7 @@ let tableKeys = $("#keys-table").DataTable({
                 for (let field in errors) {
                     msg += errors[field][0] + "\n";
                 }
-                alert(msg);
+                showToast('error',msg,3000);
             },
         });
     });
@@ -267,15 +215,9 @@ let tableKeys = $("#keys-table").DataTable({
             },
             success: function (response) {
                 if (response.success) {
-                    Swal.fire({
-                        position: "top-end",
-                        icon: "success",
-                        title: "Se agregó correctamente el registro",
-                        showConfirmButton: false,
-                        timer: 1500,
-                    });
 
-                    //agregar nueva opción al dropdown
+                    showToast('success','Registro agregado correctamente',3000);
+
                     $("#analysis_type")
                         .append(
                             $("<option>", {
@@ -295,7 +237,7 @@ let tableKeys = $("#keys-table").DataTable({
                 for (let field in errors) {
                     msg += errors[field][0] + "\n";
                 }
-                alert(msg);
+                showToast('error',msg,3000);
             },
         });
     });
